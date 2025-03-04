@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # standard lib imports
 import html
 import json as jsonlib

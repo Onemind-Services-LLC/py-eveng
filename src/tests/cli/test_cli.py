@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from click.testing import CliRunner, Result
 
 from evengsdk.cli.cli import main as cli

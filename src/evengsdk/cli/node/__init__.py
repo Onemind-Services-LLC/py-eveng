@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 NODE_STATUS_CODES = {
     0: ("stopped", ":red_circle:"),
     1: ("running", ":green_circle:"),
