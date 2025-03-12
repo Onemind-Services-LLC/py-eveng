@@ -1,5 +1,7 @@
 import click
 
+from evengsdk.exceptions import EvengApiError, EvengHTTPError
+from evengsdk.cli.console import cli_print, cli_print_error, cli_print_output, console
 from evengsdk.cli.common import list_sub_command
 from evengsdk.cli.console import cli_print_output
 from evengsdk.cli.utils import get_client
@@ -32,13 +34,21 @@ def ls(ctx, output):
 
 
 @click.command()
+@click.option("--path",default="/", help="folder to create")
 @click.pass_context
-@click.argument("path")
 def create(ctx, path):
     """
     Create folder on EVE-NG host
     """
-    pass
+    client = get_client(ctx)
+    try:
+        with console.status("[bold green]Creating folder...") as status:
+            response = client.api.create_folder(path)
+            console.log(f"{response["status"]}: {response["message"]}")
+            status.update("[bold green]folder created successfully")
+            cli_print_output("json", response)
+    except (EvengHTTPError, EvengApiError) as err:
+        console.print_error(err)
 
 
 @click.command()
@@ -58,21 +68,39 @@ def read(ctx, folder):
 
 
 @click.command()
+@click.option("--folder", help="Folder name")
 @click.pass_context
-def edit(ctx):
+def edit(ctx, folder: str):
     """
     Edit folder on EVE-NG host
     """
-    pass
+    client = get_client(ctx)
+    try:
+        with console.status("[bold green]Editing folder...") as status:
+            response = client.api.edit_folder(folder)
+            console.log(f"{response["status"]}: {response["message"]}")
+            status.update("[bold green]folder created successfully")
+            cli_print_output("json", response)
+    except (EvengHTTPError, EvengApiError) as err:
+        console.print_error(err)
 
 
 @click.command()
+@click.option("--folder-name", default="/", help="folder to delete")
 @click.pass_context
-def delete(ctx):
+def delete(ctx, folder_name):
     """
     Delete folder on EVE-NG host
     """
-    pass
+    client = get_client(ctx)
+    try:
+        with console.status("[bold green]wiping folders...") as status:
+            response = client.api.delete_folder(folder_name)
+            console.log(f"{response["status"]}: {response["message"]}")
+            status.update("[bold green]folder deleted successfully")
+            cli_print_output("text", response)
+    except (EvengHTTPError, EvengApiError) as err:
+        console.print_error(err)
 
 
 @click.group()
@@ -87,7 +115,7 @@ def folder(ctx):
 
 
 folder.add_command(ls)
-# folder.add_command(create)
+folder.add_command(create)
 folder.add_command(read)
-# folder.add_command(edit)
-# folder.add_command(delete)
+folder.add_command(edit)
+folder.add_command(delete)
