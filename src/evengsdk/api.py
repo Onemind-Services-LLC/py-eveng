@@ -147,6 +147,29 @@ class EvengApi:
         """
         return self.client.get(f"/folders/{folder}")
 
+    def create_folder(self, path: str) -> dict:
+        """Create folder on EVE-NG host
+        :param path: folder name to create
+        :type path: str"""
+        return self.client.post(f"/{path}")
+
+    def delete_folder(self, folder_name: str) -> dict:
+        """Delete folder. folders contain lab files.
+
+        :param folder_name: [description]
+        :type folder_name: str
+        """
+        return self.client.delete(f"/folders/{folder_name}")
+
+    def edit_folder(self, name: str, rename: str) -> dict:
+        """Edit folder. folders contain lab files.
+        :param path: path to folder on server. ex. my_lab_folder
+        :type path: str"""
+        if not name:
+            raise ValueError("name field is required.")
+
+        return self.client.put(f"/folders/{rename}")
+
     def normalize_path(self, path: str) -> str:
         if not path.startswith("/"):
             path = (
