@@ -34,22 +34,24 @@ def ls(ctx, output):
 
 
 @click.command()
-@click.option("--path",default="/", help="folder to create")
+@click.option("--path", default="/", help="Folder path to create (e.g., /MyLabFolder)")
 @click.pass_context
-def create(ctx, path):
+def create(ctx, path: str):
     """
-    Create folder on EVE-NG host
+    Create a folder on EVE-NG host.
+
+    Example:
+        eve-ng folder create --path /MyNewFolder
     """
     client = get_client(ctx)
     try:
         with console.status("[bold green]Creating folder...") as status:
-            response = client.api.create_folder(path)
-            console.log(f"{response["status"]}: {response["message"]}")
-            status.update("[bold green]folder created successfully")
-            cli_print_output("json", response)
+            response = client.api.create_folder(path=path)
+            console.log(f"{response['status']}: {response['message']}")
+            status.update("[bold green]Folder created successfully")
+            cli_print_output("text", response)
     except (EvengHTTPError, EvengApiError) as err:
-        console.print_error(err)
-
+        console.print(f"Error: {err}")
 
 @click.command()
 @click.argument("folder")
@@ -83,6 +85,25 @@ def edit(ctx, folder: str):
             cli_print_output("json", response)
     except (EvengHTTPError, EvengApiError) as err:
         console.print_error(err)
+
+
+# @click.command()
+# @click.argument("--folder", help="Folder name")
+# @click.argument("--path", help="Folder path to move")
+# @click.pass_context
+# def move(ctx, folder:str, path:str):
+#     """
+#     Move folder on EVE-NG host
+#     """
+#     client = get_client(ctx)
+#     try:
+#         with console.status("[bold green]Moving folder...") as status:
+#             response = client.api.move_folder(folder, path)
+#             console.log(f"{response["status"]}: {response["message"]}")
+#             status.update("[bold green]folder moved successfully")
+#             cli_print_output("json", response)
+#     except (EvengHTTPError, EvengApiError) as err:
+#         console.print_error(err)
 
 
 @click.command()
@@ -119,3 +140,4 @@ folder.add_command(create)
 folder.add_command(read)
 folder.add_command(edit)
 folder.add_command(delete)
+# folder.add_command(move)
