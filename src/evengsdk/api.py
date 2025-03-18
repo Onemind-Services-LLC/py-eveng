@@ -164,13 +164,22 @@ class EvengApi:
         """
         return self.client.get(f"/folders/{folder}")
 
-    def create_folder(self, path: str) -> dict:
+    def create_folder(self, path: str) -> Dict:
         """Create folder on EVE-NG host
         :param path: folder name to create
         :type path: str"""
-        return self.client.post(f"/{path}")
+        # return self.client.post(f"/{path}")
+        data = {
+            "path": path,
+            "name": path,
+        }
+        url = "/folders"
+        if self.get_folder(f"{url}/{path}") is None:
+            return self.client.post(url, data=json.dumps(data))
+        else:
+            raise RuntimeError(f"Folder {path} already exists.")
 
-    def delete_folder(self, folder_name: str) -> dict:
+    def delete_folder(self, folder_name: str) -> Dict:
         """Delete folder. folders contain lab files.
 
         :param folder_name: [description]
@@ -178,7 +187,7 @@ class EvengApi:
         """
         return self.client.delete(f"/folders/{folder_name}")
 
-    def edit_folder(self, name: str, rename: str) -> dict:
+    def edit_folder(self, name: str, rename: str) -> Dict:
         """Edit folder. folders contain lab files.
         :param path: path to folder on server. ex. my_lab_folder
         :type path: str"""
