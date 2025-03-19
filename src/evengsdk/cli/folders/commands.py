@@ -1,7 +1,7 @@
 import click
 
 from evengsdk.exceptions import EvengApiError, EvengHTTPError
-from evengsdk.cli.console import cli_print, cli_print_error, cli_print_output, console
+from evengsdk.cli.console import console
 from evengsdk.cli.common import list_sub_command
 from evengsdk.cli.console import cli_print_output
 from evengsdk.cli.utils import get_client
@@ -41,7 +41,7 @@ def create(ctx, name: str):
     Create a folder on EVE-NG host.
 
     Example:
-        eve-ng folder create --path /MyNewFolder
+        eve-ng folder create --path MyNewFolder
     """
     client = get_client(ctx)
     try:
@@ -77,6 +77,10 @@ def read(ctx, folder):
 def edit(ctx, folder_path: str, rename: str):
     """
     Edit folder on EVE-NG host
+
+    \b
+    Examples:
+        eve-ng folder edit --folder-path YourFolderName --rename YourRenamedFolder
     """
     client = get_client(ctx)
     try:
@@ -96,6 +100,10 @@ def edit(ctx, folder_path: str, rename: str):
 def delete(ctx, folder_name):
     """
     Delete folder on EVE-NG host
+
+    \b
+    Examples:
+        eve-ng folder delete FolderName
     """
     client = get_client(ctx)
     try:
