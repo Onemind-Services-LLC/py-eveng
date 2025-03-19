@@ -17,7 +17,7 @@ class TestLabFolderCommands:
         result: Result = runner.invoke(cli, ["folder", "list"])
         assert result.exit_code == 0, result.output
 
-    @pytest.mark.xfail
+
     def test_folder_create(self):
         """
         Arrange/Act: Run the `folder` command with the 'create' subcommand.
@@ -36,7 +36,7 @@ class TestLabFolderCommands:
         result: Result = runner.invoke(cli, ["folder", "read", "/"])
         assert result.exit_code == 0, result.output
 
-    @pytest.mark.xfail
+
     def test_folder_edit(self):
         """
         Arrange/Act: Run the `folder` command with the 'edit' subcommand.
@@ -46,7 +46,7 @@ class TestLabFolderCommands:
         result: Result = runner.invoke(cli, ["folder", "edit"])
         assert result.exit_code == 0, result.output
 
-    @pytest.mark.xfail
+
     def test_folder_delete(self):
         """
         Arrange/Act: Run the `folder` command with the 'delete' subcommand.
