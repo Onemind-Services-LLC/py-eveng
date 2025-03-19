@@ -152,8 +152,6 @@ class EvengApi:
         """Create folder on EVE-NG host
         :param name: folder name to create
         :type name: str"""
-        # return self.client.post(f"/{path}")
-        # user = self.get_user(name)
         data = {"path": "/", "name": name}
         url = "/folders"
         return self.client.post(url, data=json.dumps(data))
@@ -168,13 +166,17 @@ class EvengApi:
 
     def edit_folder(self, folder_path: str, rename: str) -> Dict:
         """Edit folder. folders contain lab files.
-        :param path: path to folder on server. ex. my_lab_folder
-        :type path: str"""
+        :param folder_path: path to folder on server. ex. my_lab_folder
+        :params rename: Renamed folder name
+        :type folder_path: str
+        :type rename: str"""
         data = {
             "path": rename,
         }
-        url = "/folders"
-        return self.client.put(url, data=json.dumps(data))
+        url = f"/folders/{folder_path}"
+        return self.client.put(
+            url, data=json.dumps({"path": f"/{rename}", "name": rename})
+        )
 
     def normalize_path(self, path: str) -> str:
         if not path.startswith("/"):
