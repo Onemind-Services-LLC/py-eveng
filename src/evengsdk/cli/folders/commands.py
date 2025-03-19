@@ -34,9 +34,9 @@ def ls(ctx, output):
 
 
 @click.command()
-@click.option("--path", default="/", help="Folder path to create (e.g., /MyLabFolder)")
+@click.option("--name", default="/", help="Folder Name to create (e.g., /MyLabFolder)")
 @click.pass_context
-def create(ctx, path: str):
+def create(ctx, name: str):
     """
     Create a folder on EVE-NG host.
 
@@ -46,12 +46,13 @@ def create(ctx, path: str):
     client = get_client(ctx)
     try:
         with console.status("[bold green]Creating folder...") as status:
-            response = client.api.create_folder(path=path)
+            response = client.api.create_folder(name=name)
             console.log(f"{response['status']}: {response['message']}")
             status.update("[bold green]Folder created successfully")
             cli_print_output("text", response)
     except (EvengHTTPError, EvengApiError) as err:
         console.print(f"Error: {err}")
+
 
 @click.command()
 @click.argument("folder")
@@ -70,40 +71,23 @@ def read(ctx, folder):
 
 
 @click.command()
-@click.option("--folder", help="Folder name")
+@click.option("--folder-path", help="Folder path")
+@click.option("--rename", help="Folder name to be renamed")
 @click.pass_context
-def edit(ctx, folder: str):
+def edit(ctx, folder_path: str, rename: str):
     """
     Edit folder on EVE-NG host
     """
     client = get_client(ctx)
     try:
         with console.status("[bold green]Editing folder...") as status:
-            response = client.api.edit_folder(folder)
+            response = client.api.edit_folder(folder_path=folder_path, rename=rename)
             console.log(f"{response["status"]}: {response["message"]}")
             status.update("[bold green]folder created successfully")
-            cli_print_output("json", response)
+            cli_print_output("text", response)
     except (EvengHTTPError, EvengApiError) as err:
         console.print_error(err)
 
-
-# @click.command()
-# @click.argument("--folder", help="Folder name")
-# @click.argument("--path", help="Folder path to move")
-# @click.pass_context
-# def move(ctx, folder:str, path:str):
-#     """
-#     Move folder on EVE-NG host
-#     """
-#     client = get_client(ctx)
-#     try:
-#         with console.status("[bold green]Moving folder...") as status:
-#             response = client.api.move_folder(folder, path)
-#             console.log(f"{response["status"]}: {response["message"]}")
-#             status.update("[bold green]folder moved successfully")
-#             cli_print_output("json", response)
-#     except (EvengHTTPError, EvengApiError) as err:
-#         console.print_error(err)
 
 
 @click.command()
@@ -140,4 +124,3 @@ folder.add_command(create)
 folder.add_command(read)
 folder.add_command(edit)
 folder.add_command(delete)
-# folder.add_command(move)

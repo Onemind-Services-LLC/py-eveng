@@ -4,6 +4,7 @@ from pathlib import Path
 from random import randint
 from typing import BinaryIO, Dict, Literal, Optional, Tuple
 from urllib.parse import quote_plus
+from evengsdk.cli.console import console
 
 
 class EvengApi:
@@ -147,20 +148,15 @@ class EvengApi:
         """
         return self.client.get(f"/folders/{folder}")
 
-    def create_folder(self, path: str) -> Dict:
+    def create_folder(self, name: str) -> Dict:
         """Create folder on EVE-NG host
-        :param path: folder name to create
-        :type path: str"""
+        :param name: folder name to create
+        :type name: str"""
         # return self.client.post(f"/{path}")
-        data = {
-            "path": path,
-            "name": path,
-        }
+        # user = self.get_user(name)
+        data = {"path": "/", "name": name}
         url = "/folders"
-        if self.get_folder(f"{url}/{path}") is None:
-            return self.client.post(url, data=json.dumps(data))
-        else:
-            raise RuntimeError(f"Folder {path} already exists.")
+        return self.client.post(url, data=json.dumps(data))
 
     def delete_folder(self, folder_name: str) -> Dict:
         """Delete folder. folders contain lab files.
@@ -170,14 +166,15 @@ class EvengApi:
         """
         return self.client.delete(f"/folders/{folder_name}")
 
-    def edit_folder(self, name: str, rename: str) -> Dict:
+    def edit_folder(self, folder_path: str, rename: str) -> Dict:
         """Edit folder. folders contain lab files.
         :param path: path to folder on server. ex. my_lab_folder
         :type path: str"""
-        if not name:
-            raise ValueError("name field is required.")
-
-        return self.client.put(f"/folders/{rename}")
+        data = {
+            "path": rename,
+        }
+        url = "/folders"
+        return self.client.put(url, data=json.dumps(data))
 
     def normalize_path(self, path: str) -> str:
         if not path.startswith("/"):
