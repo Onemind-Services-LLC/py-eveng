@@ -488,6 +488,46 @@ def create_from_topology(ctx, topology, template_dir):
 
 
 @click.command()
+@click.option("-id", help="Node ID", required=True)
+@click.option("--template", help="Edit topology template")
+@click.option(
+    "--path", default=None, callback=lambda ctx, _, v: v or ctx.obj.active_lab
+)
+@click.option("--image", help="Edit topology image")
+@click.option("--name", help="Edit topology name")
+@click.option("--uuid", help="Edit topology uuid")
+@click.option("--cpu-limit", help="Edit topology cpu limit")
+@click.option("--cpu", help="Edit CPU number")
+@click.option("--ram", help="Edit topology RAM in (MBs)")
+@click.option("--ethernet", help="Edit number of ethernets")
+@click.option("--mac", help="Edit mac addresses")
+@click.option("--qemv-version", help="Edit QEMV version")
+@click.option("--qemv-arch", help="Edit QEMV Architecture")
+@click.option("--qemv-nic", help="Edit QEMV Nic")
+@click.option("--qemv-cust-opt", help="Edit QEMV Network")
+@click.option("--statr-conf", help="Edit startup configurations")
+@click.option("--satellite", help="Edit satellite")
+@click.option("--delay", help="Edit delay")
+@click.option("--console", help="Edit console")
+@click.option("--username", help="Edit RDP username")
+@click.option("--paswd", help="Edit RDP password")
+@click.option("--left", help="Edit left")
+@click.option("--right", help="Edit right")
+@click.pass_context
+def topology_edit(ctx, id: int, path: str, **kwargs):
+    """
+    Edit topologies
+    """
+    edit_params = {k: v for k, v in kwargs.items() if v is not None}
+    _client = get_client(ctx)
+    try:
+        response = _client.api.edit_topology(path=path, id=id, params=edit_params)
+        cli_print_output("text", response)
+    except (EvengHTTPError, EvengApiError) as err:
+        console.print_error(err)
+
+
+@click.command()
 @click.option(
     "--author",
     help="lab author",
@@ -688,3 +728,4 @@ lab.add_command(topology)
 lab.add_command(import_lab)
 lab.add_command(export_lab)
 lab.add_command(create_from_topology)
+lab.add_command(topology_edit)
