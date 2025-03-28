@@ -853,15 +853,15 @@ class EvengApi:
         url = "/labs" + self.normalize_path(path)
         return self.client.delete(url)
 
-    def lock_lab(self, path: str) -> Dict:
+    def lock_lab(self, path: str, password: str) -> Dict:
         """Lock lab to prevent edits"""
         url = "/labs" + f"{self.normalize_path(path)}/Lock"
-        return self.client.put(url)
+        return self.client.put(url, json={"password": password})
 
-    def unlock_lab(self, path: str) -> Dict:
+    def unlock_lab(self, path: str, password: str) -> Dict:
         """Unlock lab to allow edits"""
         url = "/labs" + f"{self.normalize_path(path)}/Unlock"
-        return self.client.put(url)
+        return self.client.put(url, json={"password": password})
 
     def _get_network_types(self):
         network_types = self.list_networks()
