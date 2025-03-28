@@ -1,10 +1,10 @@
 # evengsdk
 
-![license](https://img.shields.io/github/license/ttafsir/evengsdk)
+![license](https://img.shields.io/github/license/Onemind-Services-LLC/evengsdk)
 [![Downloads](https://pepy.tech/badge/eve-ng)](https://pepy.tech/project/eve-ng)
 [![PyPI version](https://badge.fury.io/py/eve-ng.svg)](https://badge.fury.io/py/eve-ng)
 
-Documentation: https://ttafsir.github.io/evengsdk
+Documentation: https://Onemind-Services-LLC.github.io/evengsdk
 
 Open source library and command line utilities to work with the [EVE-NG](https://www.eve-ng.net/)  [REST API](https://www.eve-ng.net/index.php/documentation/howtos/how-to-eve-ng-api/) .
 
