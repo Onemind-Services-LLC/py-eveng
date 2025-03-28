@@ -25,8 +25,10 @@ setup(
     keywords=["eve-ng", "eveng", "unetlab", "evengsdk"],
     license="MIT license",
     version=get_version(),
-    author="Yash Pal",
-    author_email="ypal@onemindservices.com",
+    author="Abhimanyu Saharan",
+    author_email="asaharan@onemindservices.com",
+    maintainer="Onemind Services LLC",
+    maintainer_email="developers@onemindservices.com",
     python_requires=">=3.7",
     classifiers=[
         "Development Status :: 3 - Alpha",
