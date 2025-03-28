@@ -1,7 +1,10 @@
 from evengsdk.client import EvengClient
 
 client = EvengClient(
-    "eve-ng10.ttafsir.me", log_file="test.log", ssl_verify=False, protocol="https"
+    "eve-ng10.Onemind-Services-LLC.me",
+    log_file="test.log",
+    ssl_verify=False,
+    protocol="https",
 )
 client.disable_insecure_warnings()  # disable warnings for self-signed certificates
 client.login(username="admin", password="eve")

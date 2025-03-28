@@ -8,8 +8,8 @@ nav:
     - Topology Builder: topology_builder.md
 
 # Repository
-repo_name: "ttafsir/evengsdk"
-repo_url: "https://github.com/ttafsir/evengsdk"
+repo_name: "Onemind-Services-LLC/evengsdk"
+repo_url: "https://github.com/Onemind-Services-LLC/evengsdk"
 
 theme:
   name: "material"
