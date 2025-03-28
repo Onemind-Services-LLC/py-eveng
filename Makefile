@@ -78,3 +78,9 @@ dist: clean ## builds source and wheel package
 
 install: clean ## install the package to the active Python's site-packages
 	python setup.py install
+
+requirements: ## update requirements.txt
+	pip-compile --upgrade --output-file=requirements.txt requirements.in
+
+requirements-dev: ## update requirements-dev.txt
+	pip-compile --upgrade --output-file=requirements-dev.txt requirements-dev.in
