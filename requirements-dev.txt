@@ -77,12 +77,12 @@ jinja2==3.1.6
     #   mkdocs-material
     #   mkdocstrings
 jsonpointer==3.0.0
+    # via -r /home/asaharan/PycharmProjects/evengsdk/requirements.txt
+jsonschema-specifications==2024.10.1
     # via
     #   -r /home/asaharan/PycharmProjects/evengsdk/requirements.txt
     #   jsonschema
 jsonschema[format]==4.23.0
-    # via -r /home/asaharan/PycharmProjects/evengsdk/requirements.txt
-jsonschema-specifications==2024.10.1
     # via
     #   -r /home/asaharan/PycharmProjects/evengsdk/requirements.txt
     #   jsonschema
