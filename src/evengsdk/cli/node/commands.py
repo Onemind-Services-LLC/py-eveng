@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from pathlib import Path
 
 import click
@@ -14,7 +13,7 @@ client = None
 
 def _get_config(src: Path) -> str:
     """load device config"""
-    with open(src, "r") as handle:
+    with open(src) as handle:
         return handle.read()
 
 

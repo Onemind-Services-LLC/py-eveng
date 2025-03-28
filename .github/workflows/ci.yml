@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  release:
+    types:
+      - published
+  workflow_dispatch: { }
+  push:
+    branches:
+      - '*'
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+(-[a-zA-Z]+[0-9]+)?
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  pre_commit:
+    name: Run lint rules
+    runs-on: ubuntu-22.04-sh
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+
+      - name: Set up Python
+        uses: actions/setup-python@v4.7.0
+        with:
+          python-version: '3.10'
+
+      - uses: pre-commit/action@v3.0.0

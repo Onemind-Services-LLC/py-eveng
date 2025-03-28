@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import os
 import sys
 import threading
@@ -30,7 +29,7 @@ class MutuallyExclusiveOption(click.Option):
                 " arguments: [" + ex_str + "]."
                 " The API supports editing a single field at a time."
             )
-        super(MutuallyExclusiveOption, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def handle_parse_result(self, ctx, opts, args):
         if self.mutually_exclusive.intersection(opts) and self.name in opts:
@@ -40,7 +39,7 @@ class MutuallyExclusiveOption(click.Option):
                     self.name, ", ".join(self.mutually_exclusive)
                 )
             )
-        return super(MutuallyExclusiveOption, self).handle_parse_result(ctx, opts, args)
+        return super().handle_parse_result(ctx, opts, args)
 
 
 client = None
