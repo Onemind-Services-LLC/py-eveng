@@ -75,6 +75,10 @@ class EvengApi:
         name: str = "",
         email: str = "",
         expiration: str = "-1",
+        cpu: int = -1,
+        ram: int = -1,
+        datestart: str = "-1",
+        extauth: str = "internal",
     ) -> Dict:
         """Add a new user in EVE-NG host
 
@@ -103,6 +107,10 @@ class EvengApi:
                     "password": password,
                     "role": role,
                     "expiration": expiration,
+                    "cpu": cpu,
+                    "ram": ram,
+                    "datestart": datestart,
+                    "extauth": extauth,
                 }
             ),
         )
