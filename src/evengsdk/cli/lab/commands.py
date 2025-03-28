@@ -510,7 +510,7 @@ def create_from_topology(ctx, topology, template_dir):
 @click.option("--delay", help="Edit delay")
 @click.option("--console", help="Edit console")
 @click.option("--username", help="Edit RDP username")
-@click.option("--paswd", help="Edit RDP password")
+@click.option("--passwd", help="Edit RDP password")
 @click.option("--left", help="Edit left")
 @click.option("--right", help="Edit right")
 @click.pass_context
