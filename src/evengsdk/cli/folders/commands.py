@@ -93,7 +93,6 @@ def edit(ctx, folder_path: str, rename: str):
         console.print_error(err)
 
 
-
 @click.command()
 @click.option("--folder-name", default="/", help="folder to delete")
 @click.pass_context
