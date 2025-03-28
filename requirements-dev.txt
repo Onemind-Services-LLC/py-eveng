@@ -43,6 +43,8 @@ colorama==0.4.6
     # via
     #   -r /home/asaharan/PycharmProjects/evengsdk/requirements.txt
     #   mkdocs-material
+coverage[toml]==7.7.1
+    # via pytest-cov
 distlib==0.3.9
     # via virtualenv
 filelock==3.18.0
@@ -185,6 +187,10 @@ pymdown-extensions==10.14.3
     #   mkdocs-material
     #   mkdocstrings
 pytest==8.3.5
+    # via
+    #   -r requirements-dev.in
+    #   pytest-cov
+pytest-cov==6.0.0
     # via -r requirements-dev.in
 python-dateutil==2.9.0.post0
     # via
