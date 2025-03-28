@@ -96,6 +96,15 @@ class EvengApi:
         :param expiration: date until the user is valid (UNIX timestamp)
                 or -1 if never expires, defaults to '-1'
         :type expiration: str, optional
+        :param cpu: number of CPU cores, defaults to -1
+        :type cpu: int, optional
+        :param ram: number of RAM, defaults to -1
+        :type ram: int, optional
+        :param datestart: date from which to retrieve data from EVE-NG,
+        defaults to '-1'
+        :param extauth: authentication type, defaults to 'internal'
+        :type extauth: str, optional
+
         """
         return self.client.post(
             "/users",
