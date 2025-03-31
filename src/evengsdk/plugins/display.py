@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # standard lib imports
 import html
 import json as jsonlib
@@ -35,12 +34,16 @@ def json(data, *args, **kwargs):
 
 @register_plugin
 def table(data, *args, **kwargs):
+    table_data = data.get("data", [])
+    if not table_data:
+        return "No data available"
+
     table = Table(
         title=kwargs.get("table_title", None),
         show_header=kwargs.get("show_header", True),
     )
-    table_header_and_opts = kwargs.get("table_header")  # tuples of (header, opts)
-    keys = data["data"][0].keys()  # keys from first item in data
+    table_header_and_opts = kwargs.get("table_header", [])  # tuples of (header, opts)
+    keys = table_data[0].keys()  # keys from first item in data
 
     # use the first item in table_header_and_opts to set the header; default to keys in data
     table_header = [x[0] for x in table_header_and_opts] or list(keys)
@@ -52,12 +55,11 @@ def table(data, *args, **kwargs):
     table_data = data.get("data", [])
     display_table = []
 
-    if isinstance(table_data, list):
-        for item in table_data:
-            for key in keys_to_drop:
-                if isinstance(item, dict):
-                    del item[key]
-            display_table.append(item)
+    for item in table_data:
+        for key in keys_to_drop:
+            if isinstance(item, dict):
+                del item[key]
+        display_table.append(item)
 
     if table_header:
         for col_name, col_options in table_header_and_opts:

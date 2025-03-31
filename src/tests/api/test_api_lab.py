@@ -47,11 +47,11 @@ class TestEvengApiLab:
             authenticated_client.api.edit_lab(lab_path, params)
 
     def test_lock_lab(self, authenticated_client, lab_path):
-        resp = authenticated_client.api.lock_lab(lab_path)
+        resp = authenticated_client.api.lock_lab(lab_path, "password")
         assert resp["status"] == "success"
 
     def test_unlock_lab(self, authenticated_client, lab_path):
-        resp = authenticated_client.api.unlock_lab(lab_path)
+        resp = authenticated_client.api.unlock_lab(lab_path, "password")
         assert resp["status"] == "success"
 
     def test_get_lab_topology(self, authenticated_client, lab_path, lab):

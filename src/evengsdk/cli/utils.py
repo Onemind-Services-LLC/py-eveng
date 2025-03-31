@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import html
 import os
 import sys
@@ -17,7 +16,7 @@ def get_client(ctx):
     try:
         client.login(ctx.obj.username, ctx.obj.password)
         return client
-    except (EvengLoginError) as err:
+    except EvengLoginError as err:
         console.print_error(err)
 
 

@@ -2,7 +2,7 @@ import json
 import logging
 
 import requests
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
+from urllib3.exceptions import InsecureRequestWarning
 from evengsdk.api import EvengApi
 
 from evengsdk.exceptions import EvengHTTPError, EvengLoginError
