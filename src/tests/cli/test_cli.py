@@ -39,5 +39,5 @@ class TestCliUnauthenticated:
         runner: CliRunner = CliRunner()
         result: Result = runner.invoke(cli, ["lab", "list"], env=env_vars)
         assert (
-            "Authentication failed" in result.output.strip()
+            "Error logging in" in result.output.strip()
         ), "Error message should match expected error message."
