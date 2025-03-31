@@ -139,7 +139,7 @@ class TestEvengApiNodes:
             lab_path, test_node_data["name"]
         )
         authenticated_client.api.start_node(lab_path, 1)
-        time.sleep(240) # Allow time for the image to boot up
+        time.sleep(240)  # Allow time for the image to boot up
         result = authenticated_client.api.export_node(lab_path, node["id"])
         assert result["status"] == "success"
 
