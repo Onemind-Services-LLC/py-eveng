@@ -129,7 +129,7 @@ def test_node_data():
     return {
         "node_type": "qemu",
         "template": "veos",
-        "image": "veos-4.21.1.1F",
+        "image": "veos-4.23",
         "name": "leaf01",
         "ethernet": 4,
         "cpu": 2,

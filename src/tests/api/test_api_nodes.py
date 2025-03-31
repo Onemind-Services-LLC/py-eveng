@@ -1,3 +1,5 @@
+import time
+
 import pytest
 
 
@@ -136,6 +138,8 @@ class TestEvengApiNodes:
         node = authenticated_client.api.get_node_by_name(
             lab_path, test_node_data["name"]
         )
+        authenticated_client.api.start_node(lab_path, 1)
+        time.sleep(240) # Allow time for the image to boot up
         result = authenticated_client.api.export_node(lab_path, node["id"])
         assert result["status"] == "success"
 
