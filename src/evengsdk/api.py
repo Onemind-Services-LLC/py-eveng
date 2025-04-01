@@ -51,6 +51,104 @@ class EvengApi:
         """
         return self.client.get(f"/list/templates/{node_type}")
 
+    def edit_system_settings(self, path: str, param: dict) -> Dict:
+        """
+        Edit lab settings. The request can set one or more parameters. Optional parameters can be reverted to their default values by setting them to an empty string.
+
+        :param ad_server_dn: Base DN for the Active Directory server.
+        :type ad_server_dn: str
+        :param ad_server_group: Active Directory group for the lab.
+        :type ad_server_group: str
+        :param ad_server_ip: IP address of the Active Directory server.
+        :type ad_server_ip: str
+        :param ad_server_port: Port of the Active Directory server.
+        :type ad_server_port: int
+        :param ad_server_tls: TLS enable/disable flag for the Active Directory connection.
+        :type ad_server_tls: int
+        :param caching: Caching mode for the lab.
+        :type caching: int
+        :param color_scheme: Color scheme for the lab interface.
+        :type color_scheme: str
+        :param cpudedicate: CPU dedicate mode for the lab.
+        :type cpudedicate: int
+        :param docker_net: Docker network address.
+        :type docker_net: str
+        :param font_name: Font name used in the lab interface.
+        :type font_name: str
+        :param font_size: Font size used in the lab interface.
+        :type font_size: int
+        :param ipv6: Enable/Disable IPv6 support.
+        :type ipv6: int
+        :param lic_check: License check mode.
+        :type lic_check: str
+        :param mindisk: Minimum disk space for the lab.
+        :type mindisk: int
+        :param nat_net: NAT network address.
+        :type nat_net: str
+        :param numa: NUMA (Non-Uniform Memory Access) mode flag.
+        :type numa: int
+        :param proxy_password: Proxy server password.
+        :type proxy_password: str
+        :param proxy_port: Proxy server port.
+        :type proxy_port: int
+        :param proxy_server: Proxy server address.
+        :type proxy_server: str
+        :param proxy_user: Proxy server username.
+        :type proxy_user: str
+        :param radius_server_ip: IP address of the first RADIUS server.
+        :type radius_server_ip: str
+        :param radius_server_ip_2: IP address of the second RADIUS server.
+        :type radius_server_ip_2: str
+        :param radius_server_port: Port for the first RADIUS server.
+        :type radius_server_port: int
+        :param radius_server_port_2: Port for the second RADIUS server.
+        :type radius_server_port_2: int
+        :param radius_server_secret: Secret for the first RADIUS server.
+        :type radius_server_secret: str
+        :param radius_server_secret_2: Secret for the second RADIUS server.
+        :type radius_server_secret_2: str
+        :param template_disabled: Disabled template file name.
+        :type template_disabled: str
+        :param vpn_net: VPN network address.
+        :type vpn_net: str
+        """
+        valid_params = (
+            "ad_server_dn",
+            "ad_server_group",
+            "ad_server_ip",
+            "ad_server_port",
+            "ad_server_tls",
+            "caching",
+            "color_scheme",
+            "cpudedicate",
+            "docker_net",
+            "font_name",
+            "font_size",
+            "ipv6",
+            "lic_check",
+            "mindisk",
+            "nat_net",
+            "numa",
+            "proxy_password",
+            "proxy_port",
+            "proxy_server",
+            "proxy_user",
+            "radius_server_ip",
+            "radius_server_ip_2",
+            "radius_server_port",
+            "radius_server_port_2",
+            "radius_server_secret",
+            "radius_server_secret_2",
+            "template_disabled",
+            "vpn_net",
+        )
+        for key, _ in param.items():
+            if key not in valid_params:
+                raise ValueError(f"{key} is an invalid or unsupported paramater")
+
+        url = "/system/settings"
+        return self.client.post(url, data=json.dumps(param))
+
     def list_users(self) -> Dict:
         """Return list of EVE-NG users"""
         return self.client.get("/users/")
