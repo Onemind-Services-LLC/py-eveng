@@ -211,7 +211,6 @@ def status(ctx, output):
 )
 @click.option("--template-disabled", default=".missing", help="Disabled Template")
 @click.option("--vpn-net", default="172.29.130", help="VPN Network")
-@click.option()
 @click.pass_context
 def system_settings(
     ctx,
@@ -299,4 +298,4 @@ def system(ctx):
     client = ctx.obj.client
 
 
-system.add_command(system_settings)
+# system.add_command(system_settings)
