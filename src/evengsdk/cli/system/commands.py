@@ -1,7 +1,7 @@
 import click
 
-from evengsdk.cli.common import list_command
-from evengsdk.cli.console import cli_print_output, console
+from evengsdk.cli.common import list_sub_command, list_command
+from evengsdk.cli.console import cli_print, cli_print_error, cli_print_output, console
 from evengsdk.cli.utils import get_client
 from evengsdk.exceptions import EvengApiError, EvengHTTPError
 
@@ -176,3 +176,127 @@ def status(ctx, output):
         cli_print_output(output, resp, header="System")
     except (EvengHTTPError, EvengApiError) as err:
         console.print_error(err)
+
+
+@list_command
+@click.option("--ad-server-dn", help="Base DN")
+@click.option("--ad-server-group", help="EVE-NG Active Directory Group")
+@click.option("--ad-server-ip", help="Active Directory Server")
+@click.option("--ad-server-port", help="Port", type=int)
+@click.option("--ad-server-tls", help="Active Directory TLS", type=int)
+@click.option("--caching", help="Caching mode")
+@click.option("color-scheme", help="Color scheme")
+@click.option("--cpudedicate", default=1, help="CPU Dedicate Mode", type=int)
+@click.option("--docker-net", default="172.17", help="Docker Network")
+@click.option("--font-name", default="monospace", help="Font Name")
+@click.option("--font-size", default=11, help="Font Size", type=int)
+@click.option("--ipv6", default=0, help="Enable IPv6", type=int)
+@click.option("--lic-check", default="strict", help="License Check Mode")
+@click.option("--mindisk", default=20, help="Minimum Disk Size", type=int)
+@click.option("--nat-net", default="172.29.129", help="NAT Network")
+@click.option("--numa", default=0, help="NUMA Mode", type=int)
+@click.option("--proxy-password", default="", help="Proxy Password")
+@click.option("--proxy-port", default=0, help="Proxy Port", type=int)
+@click.option("--proxy-server", default="0.0.0.0", help="Proxy Server")
+@click.option("--proxy-user", default="", help="Proxy Username")
+@click.option("--radius-server-ip", default="0.0.0.0", help="RADIUS Server IP")
+@click.option("--radius-server-ip_2", default="0.0.0.0", help="RADIUS Server IP 2")
+@click.option("--radius-server-port", default=1812, help="RADIUS Server Port", type=int)
+@click.option(
+    "--radius-server-port_2", default=1812, help="RADIUS Server Port 2", type=int
+)
+@click.option("--radius-server-secret", default="secret", help="RADIUS Server Secret")
+@click.option(
+    "--radius-server-secret_2", default="secret", help="RADIUS Server Secret 2"
+)
+@click.option("--template-disabled", default=".missing", help="Disabled Template")
+@click.option("--vpn-net", default="172.29.130", help="VPN Network")
+@click.option()
+@click.pass_context
+def system_settings(
+    ctx,
+    ad_server_dn,
+    ad_server_group,
+    ad_server_ip,
+    ad_server_port,
+    ad_server_tls,
+    caching,
+    color_scheme,
+    cpudedicate,
+    docker_net,
+    font_name,
+    font_size,
+    ipv6,
+    lic_check,
+    mindisk,
+    nat_net,
+    numa,
+    proxy_password,
+    proxy_port,
+    proxy_server,
+    proxy_user,
+    radius_server_ip,
+    radius_server_ip_2,
+    radius_server_port,
+    radius_server_port_2,
+    radius_server_secret,
+    radius_server_secret_2,
+    template_disabled,
+    vpn_net,
+):
+    """Edit System Settings
+    \b
+    Example:
+        eve-ng node create --ad_server_dn "dc=com,dc=example" --ad_server_group "EVE Users" --ad_server_ip "0.0.0.0" --ad_server_port 389 --ad_server_tls 0 --caching 0 --color_scheme "black-white" --cpudedicate 1 --docker_net "172.17" --font_name "monospace" --font_size 11 --ipv6 0 --lic_check "strict" --mindisk 20 --nat_net "172.29.129" --numa 0 --proxy_password "" --proxy_port 0 --proxy_server "0.0.0.0" --proxy_user "" --radius_server_ip "0.0.0.0" --radius_server_ip_2 "0.0.0_
+
+    """
+    _client = get_client(ctx)
+    node = {
+        "ad_server_dn": ad_server_dn,
+        "ad_server_group": ad_server_group,
+        "ad_server_ip": ad_server_ip,
+        "ad_server_port": ad_server_port,
+        "ad_server_tls": ad_server_tls,
+        "caching": caching,
+        "color_scheme": color_scheme,
+        "cpudedicate": cpudedicate,
+        "docker_net": docker_net,
+        "font_name": font_name,
+        "font_size": font_size,
+        "ipv6": ipv6,
+        "lic_check": lic_check,
+        "mindisk": mindisk,
+        "nat_net": nat_net,
+        "numa": numa,
+        "proxy_password": proxy_password,
+        "proxy_port": proxy_port,
+        "proxy_server": proxy_server,
+        "proxy_user": proxy_user,
+        "radius_server_ip": radius_server_ip,
+        "radius_server_ip_2": radius_server_ip_2,
+        "radius_server_port": radius_server_port,
+        "radius_server_port_2": radius_server_port_2,
+        "radius_server_secret": radius_server_secret,
+        "radius_server_secret_2": radius_server_secret_2,
+        "template_disabled": template_disabled,
+        "vpn_net": vpn_net,
+    }
+    try:
+        resp = _client.edit_system_settings(node)
+        cli_print_output("json", resp, header="Node created")
+    except (EvengHTTPError, EvengApiError) as err:
+        console.print_error(err)
+
+
+@click.group()
+@click.pass_context
+def system(ctx):
+    """System sub commands
+
+    Edit System Settings
+    """
+    global client
+    client = ctx.obj.client
+
+
+system.add_command(system_settings)
