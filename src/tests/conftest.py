@@ -1,7 +1,7 @@
 import os
 import re
 from datetime import datetime
-from distutils import dir_util
+from shutil import copytree
 from pathlib import Path
 
 import pytest
@@ -195,6 +195,6 @@ def datadir(tmp_path_factory, request):
     temp_path = tmp_path_factory.mktemp(test_dir.stem)
 
     if os.path.isdir(test_dir):
-        dir_util.copy_tree(test_dir, str(temp_path))
+        copytree(test_dir, str(temp_path))
 
     return temp_path
