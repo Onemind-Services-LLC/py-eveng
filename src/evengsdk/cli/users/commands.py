@@ -21,8 +21,8 @@ def user_sub_command(subcommand):
             ),
             click.option("--role", "-r", help="user role", default="user"),
             click.option("--email", help="user email"),
-            click.option("--cpu", help="user cpu"),
-            click.option("--ram", help="user ram"),
+            click.option("--cpu", help="user cpu", type=int),
+            click.option("--ram", type=int, help="user ram"),
             click.option("--datestart", help="user datestart"),
             click.option("--extauth", help="user extauth"),
         )
