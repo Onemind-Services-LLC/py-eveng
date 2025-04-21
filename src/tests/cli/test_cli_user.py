@@ -17,6 +17,14 @@ def test_user(test_user_data, helpers):
         test_user_data["name"],
         "--email",
         test_user_data["email"],
+        "--cpu",
+        test_user_data["cpu"],
+        "--ram",
+        test_user_data["ram"],
+        "--datestart",
+        test_user_data["datestart"],
+        "--extauth",
+        test_user_data["extauth"],
     ]
     yield helpers.run_cli_command(["user", "create", *cli_args])
     helpers.run_cli_command(["user", "delete", "-u", test_user_data["username"]])
