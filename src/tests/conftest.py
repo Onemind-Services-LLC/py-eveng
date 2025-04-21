@@ -129,7 +129,7 @@ def test_node_data():
     return {
         "node_type": "qemu",
         "template": "veos",
-        "image": "veos-4.23",
+        "image": "veos-4.21.1.1F",
         "name": "leaf01",
         "ethernet": 4,
         "cpu": 2,
@@ -195,6 +195,6 @@ def datadir(tmp_path_factory, request):
     temp_path = tmp_path_factory.mktemp(test_dir.stem)
 
     if os.path.isdir(test_dir):
-        copytree(test_dir, str(temp_path))
+        dir_util.copy_tree(test_dir, str(temp_path))
 
     return temp_path
