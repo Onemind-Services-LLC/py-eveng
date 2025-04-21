@@ -80,7 +80,6 @@ class TestLabNodeCommands:
         else:
             assert "Cannot find node in the selected lab" in result.output
 
-    @pytest.mark.xfail
     def test_lab_node_upload_config_inline(self, cli_lab_path, helpers):
         """
         Arrange/Act: Run the `node` command with the 'upload-config'
@@ -94,7 +93,6 @@ class TestLabNodeCommands:
         assert result.exit_code == 0, result.output
         assert "Lab has been saved" in result.output
 
-    @pytest.mark.xfail
     def test_lab_node_upload_config_file(self, datadir, cli_lab_path, helpers):
         """
         Arrange/Act: Run the `node` command with the 'upload-config'

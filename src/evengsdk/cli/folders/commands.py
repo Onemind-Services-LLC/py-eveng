@@ -41,7 +41,7 @@ def create(ctx, name: str):
     Create a folder on EVE-NG host.
 
     Example:
-        eve-ng folder create --path MyNewFolder
+        eve-ng folder create --name MyNewFolder
     """
     client = get_client(ctx)
     try:
