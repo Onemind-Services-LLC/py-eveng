@@ -86,7 +86,7 @@ def edit(ctx, folder_path: str, rename: str):
     try:
         with console.status("[bold green]Editing folder...") as status:
             response = client.api.edit_folder(folder_path=folder_path, rename=rename)
-            console.log(f"{response["status"]}: {response["message"]}")
+            console.log(f"{response['status']}: {response['message']}")
             status.update("[bold green]folder created successfully")
             cli_print_output("text", response)
     except (EvengHTTPError, EvengApiError) as err:
@@ -108,7 +108,7 @@ def delete(ctx, folder_name):
     try:
         with console.status("[bold green]wiping folders...") as status:
             response = client.api.delete_folder(folder_name)
-            console.log(f"{response["status"]}: {response["message"]}")
+            console.log(f"{response['status']}: {response['message']}")
             status.update("[bold green]folder deleted successfully")
             cli_print_output("text", response)
     except (EvengHTTPError, EvengApiError) as err:

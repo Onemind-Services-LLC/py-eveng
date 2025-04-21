@@ -54,6 +54,8 @@ test: ## run tests quickly with the default Python
 	pytest
 
 test-all: ## run tests on every Python version with tox
+	pyenv install -s 3.9 3.10 3.11 3.12
+	pyenv local 3.9 3.10 3.11 3.12
 	tox
 
 coverage: ## check code coverage quickly with the default Python
