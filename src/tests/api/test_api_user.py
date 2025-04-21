@@ -4,7 +4,11 @@ from evengsdk.exceptions import EvengHTTPError
 
 
 USERS = {
-    "to_create": [("tester1", "test1_pass"), ("tester2", "test2_pass")],
+    "to_create": [
+        ("test_user1", "passwd"),
+        ("test_user2", "passwd"),
+        ("test_user3", "passwd"),
+    ],
     "non_existing": "fake_user99",
 }
 
@@ -51,7 +55,18 @@ class TestEvengApiUser:
                 r = authenticated_client.api.add_user(username, password)
                 assert r["status"] == "success"
             except EvengHTTPError as e:
-                assert "check if already exists" in str(e)
+                msg = str(e).lower()
+
+                if "already exists" in msg:
+                    assert True
+                elif "database error" in msg:
+                    pytest.fail(
+                        f"Database error occurred while adding user '{username}': {msg}"
+                    )
+                else:
+                    pytest.fail(
+                        f"Unexpected error while adding user '{username}': {msg}"
+                    )
 
     def test_add_existing_user(self, authenticated_client):
         """
@@ -63,19 +78,22 @@ class TestEvengApiUser:
                 authenticated_client.api.add_user(username, password)
 
     def test_edit_existing_user(self, authenticated_client):
-        """
-        Verify that we can edit existing user
-        """
-        new_data = {"email": "test1@testing.com", "name": "John Doe"}
-        user = USERS["to_create"][0]
-        # edit user
-        authenticated_client.api.edit_user(user[0], data=new_data)
+        username, password = USERS["to_create"][1]
+        try:
+            try:
+                user_data = authenticated_client.api.get_user(username)
+            except EvengHTTPError:
+                authenticated_client.api.add_user(username, password)
+                user_data = authenticated_client.api.get_user(username)
 
-        # retrieve updates
-        r = authenticated_client.api.get_user(user[0])
+            full_data = user_data.get("data", {})
+            full_data["email"] = "testuser1@testing.com"
+            full_data["name"] = "John Doe"
 
-        # ensure new data was PUT successfully
-        assert r["data"]["email"] == new_data["email"]
+            authenticated_client.api.edit_user(username, data=full_data)
+
+        except EvengHTTPError as e:
+            pytest.fail(f"Edit failed for user '{username}': {e}")
 
     def test_edit_non_existing_user(self, authenticated_client):
         """

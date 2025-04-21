@@ -4,6 +4,7 @@ from pathlib import Path
 from random import randint
 from typing import BinaryIO, Dict, Literal, Optional, Tuple
 from urllib.parse import quote_plus
+from evengsdk.cli.console import console
 
 
 class EvengApi:
@@ -75,6 +76,10 @@ class EvengApi:
         name: str = "",
         email: str = "",
         expiration: str = "-1",
+        cpu: int = -1,
+        ram: int = -1,
+        datestart: str = "-1",
+        extauth: str = "internal",
     ) -> Dict:
         """Add a new user in EVE-NG host
 
@@ -92,6 +97,15 @@ class EvengApi:
         :param expiration: date until the user is valid (UNIX timestamp)
                 or -1 if never expires, defaults to '-1'
         :type expiration: str, optional
+        :param cpu: number of CPU cores, defaults to -1
+        :type cpu: int, optional
+        :param ram: number of RAM, defaults to -1
+        :type ram: int, optional
+        :param datestart: date from which to retrieve data from EVE-NG,
+        defaults to '-1'
+        :param extauth: authentication type, defaults to 'internal'
+        :type extauth: str, optional
+
         """
         return self.client.post(
             "/users",
@@ -103,6 +117,10 @@ class EvengApi:
                     "password": password,
                     "role": role,
                     "expiration": expiration,
+                    "cpu": cpu,
+                    "ram": ram,
+                    "datestart": datestart,
+                    "extauth": extauth,
                 }
             ),
         )
@@ -146,6 +164,36 @@ class EvengApi:
         :type folder: str
         """
         return self.client.get(f"/folders/{folder}")
+
+    def create_folder(self, name: str) -> Dict:
+        """Create folder on EVE-NG host
+        :param name: folder name to create
+        :type name: str"""
+        data = {"path": "/", "name": name}
+        url = "/folders"
+        return self.client.post(url, data=json.dumps(data))
+
+    def delete_folder(self, folder_name: str) -> Dict:
+        """Delete folder. folders contain lab files.
+
+        :param folder_name: [description]
+        :type folder_name: str
+        """
+        return self.client.delete(f"/folders/{folder_name}")
+
+    def edit_folder(self, folder_path: str, rename: str) -> Dict:
+        """Edit folder. folders contain lab files.
+        :param folder_path: path to folder on server. ex. my_lab_folder
+        :params rename: Renamed folder name
+        :type folder_path: str
+        :type rename: str"""
+        data = {
+            "path": rename,
+        }
+        url = f"/folders/{folder_path}"
+        return self.client.put(
+            url, data=json.dumps({"path": f"/{rename}", "name": rename})
+        )
 
     def normalize_path(self, path: str) -> str:
         if not path.startswith("/"):
