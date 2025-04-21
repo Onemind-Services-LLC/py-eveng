@@ -45,7 +45,6 @@ class TestEvengApiUser:
             user = USERS["non_existing"]
             authenticated_client.api.get_user(user)
 
-    @pytest.mark.xfail
     def test_add_user(self, authenticated_client):
         """
         Verify that we can created a user with just
