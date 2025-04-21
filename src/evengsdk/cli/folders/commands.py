@@ -41,7 +41,7 @@ def create(ctx, name: str):
     Create a folder on EVE-NG host.
 
     Example:
-        eve-ng folder create --path MyNewFolder
+        eve-ng folder create --name MyNewFolder
     """
     client = get_client(ctx)
     try:
@@ -87,7 +87,7 @@ def edit(ctx, folder_path: str, rename: str):
         with console.status("[bold green]Editing folder...") as status:
             response = client.api.edit_folder(folder_path=folder_path, rename=rename)
             console.log(f"{response['status']}: {response['message']}")
-            status.update("[bold green]folder created successfully")
+            status.update("[bold green]folder edited successfully")
             cli_print_output("text", response)
     except (EvengHTTPError, EvengApiError) as err:
         console.print_error(err)

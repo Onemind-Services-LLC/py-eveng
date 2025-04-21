@@ -131,7 +131,6 @@ class TestEvengApiNodes:
         result = authenticated_client.api.export_all_nodes(lab_path)
         assert result["status"] == "success"
 
-    @pytest.mark.xfail
     def test_export_node(self, authenticated_client, lab_path, test_node_data):
         """
         Save node startup-config to lab
@@ -144,7 +143,6 @@ class TestEvengApiNodes:
         result = authenticated_client.api.export_node(lab_path, node["id"])
         assert result["status"] == "success"
 
-    @pytest.mark.xfail
     def test_get_node_interfaces(self, authenticated_client, lab_path, test_node_data):
         """
         Get configured interfaces from a node

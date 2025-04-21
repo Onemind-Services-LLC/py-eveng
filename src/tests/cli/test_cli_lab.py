@@ -117,7 +117,6 @@ class TestLabCommands:
         result = helpers.run_cli_command(["lab", "stop", "--path", cli_lab_path])
         assert result.exit_code == 0, result.output
 
-    @pytest.mark.xfail
     def test_lab_list(self, helpers, cli_lab_path):
         """
         Arrange/Act: Run the `lab` command with the 'list' subcommand.
