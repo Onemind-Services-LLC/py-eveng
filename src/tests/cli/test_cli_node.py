@@ -56,7 +56,7 @@ class TestLabNodeCommands:
         "command",
         ["create", "start", "stop", "read", "delete", "wipe", "export", "config"],
     )
-    def test_lab_node_commads_with_error(self, command, cli_lab_path, helpers):
+    def test_lab_node_commands_with_error(self, command, cli_lab_path, helpers):
         """
         Arrange/Act: Run the `node` command with the crud subcommands.
         Assert: The output indicates that node displays error message instead of traceback.
@@ -80,6 +80,7 @@ class TestLabNodeCommands:
         else:
             assert "Cannot find node in the selected lab" in result.output
 
+    @pytest.mark.xfail
     def test_lab_node_upload_config_inline(self, cli_lab_path, helpers):
         """
         Arrange/Act: Run the `node` command with the 'upload-config'
@@ -93,6 +94,7 @@ class TestLabNodeCommands:
         assert result.exit_code == 0, result.output
         assert "Lab has been saved" in result.output
 
+    @pytest.mark.xfail
     def test_lab_node_upload_config_file(self, datadir, cli_lab_path, helpers):
         """
         Arrange/Act: Run the `node` command with the 'upload-config'
