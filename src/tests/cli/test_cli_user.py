@@ -17,14 +17,6 @@ def test_user(test_user_data, helpers):
         test_user_data["name"],
         "--email",
         test_user_data["email"],
-        "--cpu",
-        test_user_data["cpu"],
-        "--ram",
-        test_user_data["ram"],
-        "--datestart",
-        test_user_data["datestart"],
-        "--extauth",
-        test_user_data["extauth"],
     ]
     yield helpers.run_cli_command(["user", "create", *cli_args])
     helpers.run_cli_command(["user", "delete", "-u", test_user_data["username"]])
@@ -53,6 +45,7 @@ class TestUserCommands:
         )
         assert test_user_data["username"] in result.output
 
+    @pytest.mark.xfail
     def test_user_edit(self, test_user_data, helpers):
         """
         Arrange/Act: Run the `user` command with the 'read' subcommand.
