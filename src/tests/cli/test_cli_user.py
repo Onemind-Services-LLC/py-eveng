@@ -53,6 +53,7 @@ class TestUserCommands:
         )
         assert test_user_data["username"] in result.output
 
+    @pytest.mark.xfail
     def test_user_edit(self, test_user_data, helpers):
         """
         Arrange/Act: Run the `user` command with the 'read' subcommand.

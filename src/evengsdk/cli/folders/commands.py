@@ -1,5 +1,7 @@
 import click
 
+from evengsdk.exceptions import EvengApiError, EvengHTTPError
+from evengsdk.cli.console import console
 from evengsdk.cli.common import list_sub_command
 from evengsdk.cli.console import cli_print_output
 from evengsdk.cli.utils import get_client
@@ -32,13 +34,24 @@ def ls(ctx, output):
 
 
 @click.command()
+@click.option("--name", default="/", help="Folder Name to create (e.g., /MyLabFolder)")
 @click.pass_context
-@click.argument("path")
-def create(ctx, path):
+def create(ctx, name: str):
     """
-    Create folder on EVE-NG host
+    Create a folder on EVE-NG host.
+
+    Example:
+        eve-ng folder create --path MyNewFolder
     """
-    pass
+    client = get_client(ctx)
+    try:
+        with console.status("[bold green]Creating folder...") as status:
+            response = client.api.create_folder(name=name)
+            console.log(f"{response['status']}: {response['message']}")
+            status.update("[bold green]Folder created successfully")
+            cli_print_output("text", response)
+    except (EvengHTTPError, EvengApiError) as err:
+        console.print(f"Error: {err}")
 
 
 @click.command()
@@ -58,21 +71,48 @@ def read(ctx, folder):
 
 
 @click.command()
+@click.option("--folder-path", help="Folder path")
+@click.option("--rename", help="Folder name to be renamed")
 @click.pass_context
-def edit(ctx):
+def edit(ctx, folder_path: str, rename: str):
     """
     Edit folder on EVE-NG host
+
+    \b
+    Examples:
+        eve-ng folder edit --folder-path YourFolderName --rename YourRenamedFolder
     """
-    pass
+    client = get_client(ctx)
+    try:
+        with console.status("[bold green]Editing folder...") as status:
+            response = client.api.edit_folder(folder_path=folder_path, rename=rename)
+            console.log(f"{response['status']}: {response['message']}")
+            status.update("[bold green]folder created successfully")
+            cli_print_output("text", response)
+    except (EvengHTTPError, EvengApiError) as err:
+        console.print_error(err)
 
 
 @click.command()
+@click.option("--folder-name", default="/", help="folder to delete")
 @click.pass_context
-def delete(ctx):
+def delete(ctx, folder_name):
     """
     Delete folder on EVE-NG host
+
+    \b
+    Examples:
+        eve-ng folder delete FolderName
     """
-    pass
+    client = get_client(ctx)
+    try:
+        with console.status("[bold green]wiping folders...") as status:
+            response = client.api.delete_folder(folder_name)
+            console.log(f"{response['status']}: {response['message']}")
+            status.update("[bold green]folder deleted successfully")
+            cli_print_output("text", response)
+    except (EvengHTTPError, EvengApiError) as err:
+        console.print_error(err)
 
 
 @click.group()
@@ -87,7 +127,7 @@ def folder(ctx):
 
 
 folder.add_command(ls)
-# folder.add_command(create)
+folder.add_command(create)
 folder.add_command(read)
-# folder.add_command(edit)
-# folder.add_command(delete)
+folder.add_command(edit)
+folder.add_command(delete)
