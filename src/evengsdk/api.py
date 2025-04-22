@@ -880,6 +880,51 @@ class EvengApi:
         url = "/labs" + f"{self.normalize_path(path)}/Unlock"
         return self.client.put(url, json={"password": password})
 
+    def edit_topology(self, path: str, id: str, params: dict) -> Dict:
+        """
+        Edit an existing topology node.
+
+        :param path: Path to the lab (e.g., /lab.unl)
+        :param id: Node ID to edit
+        :param params: Dictionary of fields to update
+        :return: Response from the API
+        """
+        valid_params = (
+            "template",
+            "type",
+            "image",
+            "name",
+            "icon",
+            "uuid",
+            "cpulimit",
+            "cpu",
+            "ram",
+            "ethernet",
+            "firstmac",
+            "qemu_version",
+            "qemu_arch",
+            "qemu_nic",
+            "qemu_options",
+            "ro_qemu_options",
+            "config",
+            "sat",
+            "delay",
+            "console",
+            "rdp_user",
+            "rdp_password",
+            "left",
+            "top",
+            "count",
+            "postfix",
+        )
+
+        for key in params:
+            if key not in valid_params:
+                raise ValueError(f"'{key}' is an invalid or unsupported parameter")
+
+        url = f"/labs/{path}/nodes/{id}"
+        return self.client.put(url, data=json.dumps(params))
+
     def _get_network_types(self):
         network_types = self.list_networks()
         return [key for key, _ in network_types["data"].items()]

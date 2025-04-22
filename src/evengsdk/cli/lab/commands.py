@@ -488,35 +488,53 @@ def create_from_topology(ctx, topology, template_dir):
 
 
 @click.command()
-@click.option("-id", help="Node ID", required=True)
-@click.option("--template", help="Edit topology template")
+@click.option("-id", help="Unique ID of the topology node to edit", required=True)
 @click.option(
-    "--path", default=None, callback=lambda ctx, _, v: v or ctx.obj.active_lab
+    "--path",
+    default=None,
+    callback=lambda ctx, _, v: v or ctx.obj.active_lab,
+    help="Path to the lab file (e.g., /lab1.unl). Defaults to the active lab if not provided",
 )
-@click.option("--image", help="Edit topology image")
-@click.option("--name", help="Edit topology name")
-@click.option("--uuid", help="Edit topology uuid")
-@click.option("--cpu-limit", help="Edit topology cpu limit")
-@click.option("--cpu", help="Edit CPU number")
-@click.option("--ram", help="Edit topology RAM in (MBs)")
-@click.option("--ethernet", help="Edit number of ethernets")
-@click.option("--mac", help="Edit mac addresses")
-@click.option("--qemv-version", help="Edit QEMV version")
-@click.option("--qemv-arch", help="Edit QEMV Architecture")
-@click.option("--qemv-nic", help="Edit QEMV Nic")
-@click.option("--qemv-cust-opt", help="Edit QEMV Network")
-@click.option("--statr-conf", help="Edit startup configurations")
-@click.option("--satellite", help="Edit satellite")
-@click.option("--delay", help="Edit delay")
-@click.option("--console", help="Edit console")
-@click.option("--username", help="Edit RDP username")
-@click.option("--passwd", help="Edit RDP password")
-@click.option("--left", help="Edit left")
-@click.option("--right", help="Edit right")
+@click.option(
+    "--image",
+    help="Set the disk image used by the node (e.g., linux-ubuntu-mate-20.04)",
+)
+@click.option("--name", help="Set a custom name for the node")
+@click.option("--uuid", help="Set a unique identifier (UUID) for the node")
+@click.option(
+    "--cpulimit", help="Set CPU usage limit (0 = no limit, 1 = limit enabled)"
+)
+@click.option("--cpu", help="Number of virtual CPUs to allocate to the node")
+@click.option("--ram", help="Amount of RAM (in MB) to assign to the node")
+@click.option("--ethernet", help="Number of Ethernet interfaces to attach")
+@click.option(
+    "--firstmac", help="Set the base MAC address for the node (e.g., 50:00:00:01:00:00)"
+)
+@click.option("--qemu-version", help="Specify the QEMU version to use (e.g., 2.12.0)")
+@click.option("--qemu-arch", help="Set the QEMU architecture (e.g., x86_64)")
+@click.option(
+    "--qemu-nic", help="Set the QEMU network interface model (e.g., virtio-net-pci)"
+)
+@click.option("--qemu-options", help="Custom QEMU options for this node")
+@click.option("--ro-qemu-options", help="Read-only QEMU options to apply to the node")
+@click.option(
+    "--config", help="Startup configuration type (0 = none, 1 = startup-config, etc.)"
+)
+@click.option("--sat", help="Set satellite option (0 = disabled, 1 = enabled)")
+@click.option("--delay", help="Set boot delay time in seconds")
+@click.option("--console", help="Set console type (e.g., telnet, vnc, rdp, spice)")
+@click.option("--rdp-user", help="Set RDP (Remote Desktop Protocol) username")
+@click.option("--rdp-password", help="Set RDP password")
+@click.option(
+    "--left", help="Set the X (horizontal) position of the node in the topology"
+)
+@click.option("--top", help="Set the Y (vertical) position of the node in the topology")
+@click.option("--count", help="Number of duplicate nodes to create")
+@click.option("--postfix", help="Set postfix number to append to the node name")
 @click.pass_context
-def topology_edit(ctx, id: int, path: str, **kwargs):
+def topology_edit(ctx, id, path, **kwargs):
     """
-    Edit topologies
+    Edit a topology node.
     """
     edit_params = {k: v for k, v in kwargs.items() if v is not None}
     _client = get_client(ctx)
