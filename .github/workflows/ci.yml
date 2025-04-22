@@ -57,6 +57,7 @@ jobs:
           EVE_NG_PASSWORD: eve
           EVE_NG_PROTOCOL: https
           EVE_NG_SSL_VERIFY: false
+
         run: make test
 
       - name: Coverage

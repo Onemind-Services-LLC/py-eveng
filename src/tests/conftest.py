@@ -120,10 +120,6 @@ def test_user_data():
         "role": "admin",
         "name": "John Doe",
         "email": "john.doe@acme.com",
-        "cpu": 2,
-        "ram": 2048,
-        "datestart": 0,
-        "extauth": 0,
     }
 
 
@@ -199,6 +195,6 @@ def datadir(tmp_path_factory, request):
     temp_path = tmp_path_factory.mktemp(test_dir.stem)
 
     if os.path.isdir(test_dir):
-        copytree(test_dir, str(temp_path), dirs_exist_ok=True)
+        copytree(test_dir, str(temp_path))
 
     return temp_path
