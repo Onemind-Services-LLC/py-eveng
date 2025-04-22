@@ -423,16 +423,12 @@ def create(ctx, path: str, author: str, description: str, version: int, name: st
 @click.pass_context
 def create_from_topology(ctx, topology, template_dir):
     """
-    Edit an existing topology node in an EVE-NG lab.
+    Create a new lab
 
-    This command allows you to modify the configuration of a node inside a lab topology,
-    such as updating its image, CPU, RAM, MAC address, QEMU options, and more.
-    Only the specified fields will be updated; unspecified fields remain unchanged.
-
-    Example:
-        eve-ng lab topology-edit -id 1 --path "lab.unl" --uuid "random-uuid" --cpulimit 0 --cpu 2 --ram 2048 --ethernet 4 --firstmac "00:1A:2B:00:00:01" --qemu-version "4.2.1" --qemu-arch "x86_64" --qemu-nic "virtio-net-pci" --qemu-options "-machine type=pc,accel=kvm" --ro-qemu-options "-nodefaults" --config 1 --sat 1 --delay 0 --console vnc --rdp-user "eveuser" --rdp-password "evepass" --left 200 --top 100 --count 1 --postfix
+    \b
+    Examples:
+        eveng lab create-from-topology --topology examples/test_topology.yml
     """
-
     _client = get_client(ctx)
 
     if not Path(topology).exists():
@@ -538,8 +534,16 @@ def create_from_topology(ctx, topology, template_dir):
 @click.pass_context
 def topology_edit(ctx, id, path, **kwargs):
     """
-    Edit a topology node.
+    Edit an existing topology node in an EVE-NG lab.
+
+    This command allows you to modify the configuration of a node inside a lab topology,
+    such as updating its image, CPU, RAM, MAC address, QEMU options, and more.
+    Only the specified fields will be updated; unspecified fields remain unchanged.
+
+    Example:
+        eve-ng lab topology-edit -id 1 --path "test_lab.unl" --uuid "random-uuid" --cpulimit 0 --cpu 2 --ram 2048 --ethernet 4 --firstmac "00:1A:2B:00:00:01" --qemu-version "4.2.1" --qemu-arch "x86_64" --qemu-nic "virtio-net-pci" --qemu-options "-machine type=pc,accel=kvm" --ro-qemu-options "-nodefaults" --config 1 --sat 1 --delay 0 --console vnc --rdp-user "eveuser" --rdp-password "evepass" --left 200 --top 100 --count 1 --postfix
     """
+
     edit_params = {k: v for k, v in kwargs.items() if v is not None}
     _client = get_client(ctx)
     try:
