@@ -34,6 +34,7 @@ jobs:
     name: Run tests
     runs-on: evengsdk
     strategy:
+      max-parallel: 1 # This is to ensure we don't call the APIs simultaneously due to license constraints
       matrix:
         python-version: [3.9, '3.10', 3.11, 3.12]
     steps:
