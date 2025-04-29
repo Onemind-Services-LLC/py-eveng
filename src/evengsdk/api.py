@@ -72,7 +72,7 @@ class EvengApi:
         self,
         username: str,
         password: str,
-        role: str = "user",
+        role: str = "",
         name: str = "",
         email: str = "",
         expiration: str = "-1",

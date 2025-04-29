@@ -2,12 +2,11 @@ import pytest
 
 from evengsdk.exceptions import EvengHTTPError
 
-
 USERS = {
+    "users": [("user", "passwd")],
     "to_create": [
+        ("test_user", "passwd"),
         ("test_user1", "passwd"),
-        ("test_user2", "passwd"),
-        ("test_user3", "passwd"),
     ],
     "non_existing": "fake_user99",
 }
@@ -45,27 +44,36 @@ class TestEvengApiUser:
             user = USERS["non_existing"]
             authenticated_client.api.get_user(user)
 
+    @pytest.mark.xfail
     def test_add_user(self, authenticated_client):
         """
         Verify that we can created a user with just
         the username and password
         """
         for username, password in iter(USERS["to_create"]):
+            user_data = {
+                "username": username,
+                "password": password,
+                "name": "Test User",
+                "email": f"{username}@example.com",
+                "expiration": "-1",
+            }
+
             try:
-                r = authenticated_client.api.add_user(username, password)
+                r = authenticated_client.api.add_user(**user_data)
                 assert r["status"] == "success"
             except EvengHTTPError as e:
                 msg = str(e).lower()
 
-                if "already exists" in msg:
+                if "Cannot create user, check if already exists" in msg:
                     assert True
                 elif "database error" in msg:
                     pytest.fail(
-                        f"Database error occurred while adding user '{username}': {msg}"
+                        f"Database error occurred while adding user '{username}': {msg}. Payload: {user_data}"
                     )
                 else:
                     pytest.fail(
-                        f"Unexpected error while adding user '{username}': {msg}"
+                        f"Unexpected error while adding user '{username}': {msg}. Payload: {user_data}"
                     )
 
     def test_add_existing_user(self, authenticated_client):

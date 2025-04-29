@@ -122,7 +122,7 @@ class TestLabCommands:
         Arrange/Act: Run the `lab` command with the 'list' subcommand.
         Assert: The output indicates that labs are listed successfully.
         """
-        result = helpers.run_cli_command(["lab", "list"])
+        result = helpers.run_cli_command(["lab", "list", "--output", "text"])
         assert result.exit_code == 0, result.output
         assert cli_lab_path in result.output
 
