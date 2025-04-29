@@ -55,12 +55,9 @@ jobs:
 
       - name: Run tests
         env:
-          EVE_NG_HOST: 127.0.0.1
+          EVE_NG_HOST: localhost
           EVE_NG_USERNAME: admin
           EVE_NG_PASSWORD: eve
           EVE_NG_PROTOCOL: https
           EVE_NG_SSL_VERIFY: false
-        run: make test
-
-      - name: Coverage
         run: make coverage
