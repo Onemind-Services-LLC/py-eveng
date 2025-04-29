@@ -33,6 +33,8 @@ jobs:
   tests:
     name: Run tests
     runs-on: evengsdk
+    needs:
+    - pre_commit
     strategy:
       max-parallel: 1 # This is to ensure we don't call the APIs simultaneously due to license constraints
       matrix:
