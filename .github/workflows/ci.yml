@@ -58,6 +58,7 @@ jobs:
           EVE_NG_HOST: 10.20.12.2
           EVE_NG_USERNAME: admin
           EVE_NG_PASSWORD: eve
+          EVE_NG_PORT: 443
           EVE_NG_PROTOCOL: https
           EVE_NG_SSL_VERIFY: false
         run: make coverage
