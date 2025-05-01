@@ -48,27 +48,24 @@ class TestUserCommands:
         Arrange/Act: Run the `user` command with the 'read' subcommand.
         Assert: The output indicates that lab retrieved successfully.
         """
-        # user = helpers.run_cli_command(["user", "add" ,"--output", "json"])
         result = helpers.run_cli_command(
             ["user", "read", "-u", test_user_data["username"]]
         )
         assert test_user_data["username"] in result.output
 
-    @pytest.mark.xfail
     def test_user_edit(self, test_user_data, helpers):
         """
         Arrange/Act: Run the `user` command with the 'read' subcommand.
         Assert: The output indicates that lab retrieved successfully.
         """
         edited_user = test_user_data.copy()
-        edited_user["name"] = "John Doe edited"
         commands = [
             "user",
             "edit",
-            "--username",
+            "-u",
             edited_user["username"],
-            "--name",
-            edited_user["name"],
+            "-n",
+            "John Doe edited",
         ]
         result = helpers.run_cli_command(commands)
         assert "User saved" in result.output

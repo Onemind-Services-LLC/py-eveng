@@ -125,7 +125,7 @@ class EvengApi:
             ),
         )
 
-    def edit_user(self, username: str, data: dict = None) -> Dict:
+    def edit_user(self, username: str, data: Optional[dict] = None) -> Dict:
         """Edit user details
 
         :param username: the user name for user to update
@@ -135,16 +135,18 @@ class EvengApi:
         :raises ValueError: when data value is missing
         """
         if not data:
-            raise ValueError("data field is required.")
+            raise ValueError("The 'data' field is required.")
 
-        url = self.client.url_prefix + f"/users/{username}"
+        url = f"{self.client.url_prefix}/users/{username}"
         existing_user = self.get_user(username)
 
-        updated_user = {}
-        if existing_user:
-            updated_user = copy.deepcopy(existing_user)
-            updated_user.update(data)
-            return self.client.put(url, data=json.dumps(updated_user))
+        if not existing_user:
+            raise RuntimeError(f"User '{username}' not found.")
+
+        updated_user = copy.deepcopy(existing_user)
+        updated_user.update(data)
+
+        return self.client.put(url, json=updated_user)
 
     def delete_user(self, username: str) -> Dict:
         return self.client.delete(f"/users/{username}")
