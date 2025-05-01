@@ -2,15 +2,18 @@ name: CI
 
 on:
   release:
-    types: [published]
-  workflow_dispatch: {}
+    types:
+      - published
+  workflow_dispatch: { }
   push:
     branches:
       - '*'
     tags:
       - v[0-9]+.[0-9]+.[0-9]+(-[a-zA-Z]+[0-9]+)?
   pull_request:
-    types: [opened, synchronize]
+    types:
+      - opened
+      - synchronize
 
 jobs:
   pre_commit:
@@ -23,97 +26,38 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4.7.0
         with:
-          python-version: '3.12'
+          python-version: '3.10'
 
       - uses: pre-commit/action@v3.0.0
 
-  test-py312:
-    name: Run tests (Python 3.12)
+  tests:
+    name: Run tests
     runs-on: evengsdk
+    needs:
+    - pre_commit
+    strategy:
+      max-parallel: 1 # This is to ensure we don't call the APIs simultaneously due to license constraints
+      matrix:
+        python-version: [3.12, 3.11, '3.10', 3.9]
     steps:
-      - uses: actions/checkout@v4.1.1
-      - uses: actions/setup-python@v4.7.0
-        with:
-          python-version: 3.12
-      - run: |
-          pip install -r requirements.txt
-          pip install -r requirements-dev.txt
-      - run: pytest src/tests
-        env:
-          EVE_NG_HOST: 10.20.12.2
-          EVE_NG_USERNAME: admin
-          EVE_NG_PASSWORD: eve
-          EVE_NG_PORT: 443
-          EVE_NG_PROTOCOL: https
-          EVE_NG_SSL_VERIFY: false
-      - run: make coverage
-      - run: sleep 600  # 10-minute delay
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
 
-  test-py311:
-    name: Run tests (Python 3.11)
-    needs: test-py312
-    runs-on: evengsdk
-    steps:
-      - uses: actions/checkout@v4.1.1
-      - uses: actions/setup-python@v4.7.0
+      - name: Set up Python
+        uses: actions/setup-python@v4.7.0
         with:
-          python-version: '3.11'
-      - run: |
-          pip install -r requirements.txt
-          pip install -r requirements-dev.txt
-      - run: pytest src/tests
-        env:
-          EVE_NG_HOST: 10.20.12.2
-          EVE_NG_USERNAME: admin
-          EVE_NG_PASSWORD: eve
-          EVE_NG_PORT: 443
-          EVE_NG_PROTOCOL: https
-          EVE_NG_SSL_VERIFY: false
-      - run: make coverage
-      - run: sleep 600  # 10-minute delay
+          python-version: ${{ matrix.python-version }}
 
-  test-py310:
-    name: Run tests (Python 3.10)
-    needs: test-py311
-    runs-on: evengsdk
-    steps:
-      - uses: actions/checkout@v4.1.1
-      - uses: actions/setup-python@v4.7.0
-        with:
-          python-version: '3.10'
-      - run: |
+      - name: Install dependencies
+        run: |
           pip install -r requirements.txt
           pip install -r requirements-dev.txt
-      - run: pytest src/tests
-        env:
-          EVE_NG_HOST: 10.20.12.2
-          EVE_NG_USERNAME: admin
-          EVE_NG_PASSWORD: eve
-          EVE_NG_PORT: 443
-          EVE_NG_PROTOCOL: https
-          EVE_NG_SSL_VERIFY: false
-      - run: make coverage
-      - run: sleep 600  # 10-minute delay
 
-  test-py39:
-    name: Run tests (Python 3.9)
-    needs: test-py310
-    runs-on: evengsdk
-    steps:
-      - uses: actions/checkout@v4.1.1
-      - uses: actions/setup-python@v4.7.0
-        with:
-          python-version: '3.9'
-      - run: |
-          pip install -r requirements.txt
-          pip install -r requirements-dev.txt
-      - run: pytest src/tests
+      - name: Run tests
         env:
           EVE_NG_HOST: 10.20.12.2
           EVE_NG_USERNAME: admin
           EVE_NG_PASSWORD: eve
-          EVE_NG_PORT: 443
           EVE_NG_PROTOCOL: https
           EVE_NG_SSL_VERIFY: false
-      - run: make coverage
-      - run: sleep 600  # 10-minute delay
+        run: make coverage
