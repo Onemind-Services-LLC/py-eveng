@@ -45,25 +45,22 @@ You can interact with the EVE-NG API through the `client.api` interface
  'bigip': 'F5 BIG-IP LTM VE',
  'cumulus': 'Cumulus VX',
 
-< OUTPUT
-OMMITTED
-FOR
-BREVITY >
+ <OUTPUT OMMITTED FOR BREVITY>
 
-'linux': 'Linux',
-'mikrotik': 'MikroTik RouterOS.missing',
-'nsx': 'VMWare NSX.missing',
-'nxosv9k': 'Cisco NX-OSv 9K',
-'paloalto': 'Palo Alto.missing',
-'pfsense': 'pfSense Firewall.missing',
-'vcenter': 'VMWare vCenter.missing',
-'vios': 'Cisco vIOS Router',
-'viosl2': 'Cisco vIOS Switch',
-'vmx': 'Juniper vMX.missing',
-'vwlc': 'Cisco vWLC.missing',
-'vyos': 'VyOS',
-'xrv9k': 'Cisco XRv 9000.missing'}
->> >
+ 'linux': 'Linux',
+ 'mikrotik': 'MikroTik RouterOS.missing',
+ 'nsx': 'VMWare NSX.missing',
+ 'nxosv9k': 'Cisco NX-OSv 9K',
+ 'paloalto': 'Palo Alto.missing',
+ 'pfsense': 'pfSense Firewall.missing',
+ 'vcenter': 'VMWare vCenter.missing',
+ 'vios': 'Cisco vIOS Router',
+ 'viosl2': 'Cisco vIOS Switch',
+ 'vmx': 'Juniper vMX.missing',
+ 'vwlc': 'Cisco vWLC.missing',
+ 'vyos': 'VyOS',
+ 'xrv9k': 'Cisco XRv 9000.missing'}
+>>>
 ```
 #### Example: Build a Lab
 
