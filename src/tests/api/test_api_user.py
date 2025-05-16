@@ -2,12 +2,11 @@ import pytest
 
 from evengsdk.exceptions import EvengHTTPError
 
-
 USERS = {
+    "users": [("user", "passwd")],
     "to_create": [
+        ("test_user", "passwd"),
         ("test_user1", "passwd"),
-        ("test_user2", "passwd"),
-        ("test_user3", "passwd"),
     ],
     "non_existing": "fake_user99",
 }
@@ -47,26 +46,31 @@ class TestEvengApiUser:
 
     def test_add_user(self, authenticated_client):
         """
-        Verify that we can created a user with just
+        Verify that we can create a user with just
         the username and password
         """
         for username, password in iter(USERS["to_create"]):
             try:
-                r = authenticated_client.api.add_user(username, password)
+                r = authenticated_client.api.add_user(
+                    username=username,
+                    password=password,
+                    name=username,
+                    email=f"{username}@example.com",
+                    role="admin",
+                    expiration="-1",
+                    cpu=-1,
+                    ram=-1,
+                    datestart="-1",
+                    extauth="internal",
+                )
                 assert r["status"] == "success"
             except EvengHTTPError as e:
-                msg = str(e).lower()
-
-                if "already exists" in msg:
+                error_msg = str(e)
+                if "already exists" in error_msg:
                     assert True
-                elif "database error" in msg:
-                    pytest.fail(
-                        f"Database error occurred while adding user '{username}': {msg}"
-                    )
                 else:
-                    pytest.fail(
-                        f"Unexpected error while adding user '{username}': {msg}"
-                    )
+                    print(f"Unexpected error for user {username}: {error_msg}")
+                    assert False, f"Unexpected failure: {error_msg}"
 
     def test_add_existing_user(self, authenticated_client):
         """

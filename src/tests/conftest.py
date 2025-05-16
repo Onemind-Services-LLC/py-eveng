@@ -120,10 +120,10 @@ def test_user_data():
         "role": "admin",
         "name": "John Doe",
         "email": "john.doe@acme.com",
-        "cpu": 2,
-        "ram": 2048,
-        "datestart": 0,
-        "extauth": 0,
+        "cpu": 1,
+        "ram": 4,
+        "datestart": "",
+        "extauth": "radius",
     }
 
 

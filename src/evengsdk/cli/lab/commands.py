@@ -488,6 +488,72 @@ def create_from_topology(ctx, topology, template_dir):
 
 
 @click.command()
+@click.option("-id", help="Unique ID of the topology node to edit", required=True)
+@click.option(
+    "--path",
+    default=None,
+    callback=lambda ctx, _, v: v or ctx.obj.active_lab,
+    help="Path to the lab file (e.g., /lab1.unl). Defaults to the active lab if not provided",
+)
+@click.option(
+    "--image",
+    help="Set the disk image used by the node (e.g., linux-ubuntu-mate-20.04)",
+)
+@click.option("--name", help="Set a custom name for the node")
+@click.option("--uuid", help="Set a unique identifier (UUID) for the node")
+@click.option(
+    "--cpulimit", help="Set CPU usage limit (0 = no limit, 1 = limit enabled)"
+)
+@click.option("--cpu", help="Number of virtual CPUs to allocate to the node")
+@click.option("--ram", help="Amount of RAM (in MB) to assign to the node")
+@click.option("--ethernet", help="Number of Ethernet interfaces to attach")
+@click.option(
+    "--firstmac", help="Set the base MAC address for the node (e.g., 50:00:00:01:00:00)"
+)
+@click.option("--qemu-version", help="Specify the QEMU version to use (e.g., 2.12.0)")
+@click.option("--qemu-arch", help="Set the QEMU architecture (e.g., x86_64)")
+@click.option(
+    "--qemu-nic", help="Set the QEMU network interface model (e.g., virtio-net-pci)"
+)
+@click.option("--qemu-options", help="Custom QEMU options for this node")
+@click.option("--ro-qemu-options", help="Read-only QEMU options to apply to the node")
+@click.option(
+    "--config", help="Startup configuration type (0 = none, 1 = startup-config, etc.)"
+)
+@click.option("--sat", help="Set satellite option (0 = disabled, 1 = enabled)")
+@click.option("--delay", help="Set boot delay time in seconds")
+@click.option("--console", help="Set console type (e.g., telnet, vnc, rdp, spice)")
+@click.option("--rdp-user", help="Set RDP (Remote Desktop Protocol) username")
+@click.option("--rdp-password", help="Set RDP password")
+@click.option(
+    "--left", help="Set the X (horizontal) position of the node in the topology"
+)
+@click.option("--top", help="Set the Y (vertical) position of the node in the topology")
+@click.option("--count", help="Number of duplicate nodes to create")
+@click.option("--postfix", help="Set postfix number to append to the node name")
+@click.pass_context
+def topology_edit(ctx, id, path, **kwargs):
+    """
+    Edit an existing topology node in an EVE-NG lab.
+
+    This command allows you to modify the configuration of a node inside a lab topology,
+    such as updating its image, CPU, RAM, MAC address, QEMU options, and more.
+    Only the specified fields will be updated; unspecified fields remain unchanged.
+
+    Example:
+        eve-ng lab topology-edit -id 1 --path "test_lab.unl" --uuid "random-uuid" --cpulimit 0 --cpu 2 --ram 2048 --ethernet 4 --firstmac "00:1A:2B:00:00:01" --qemu-version "4.2.1" --qemu-arch "x86_64" --qemu-nic "virtio-net-pci" --qemu-options "-machine type=pc,accel=kvm" --ro-qemu-options "-nodefaults" --config 1 --sat 1 --delay 0 --console vnc --rdp-user "eveuser" --rdp-password "evepass" --left 200 --top 100 --count 1 --postfix
+    """
+
+    edit_params = {k: v for k, v in kwargs.items() if v is not None}
+    _client = get_client(ctx)
+    try:
+        response = _client.api.edit_topology(path=path, id=id, params=edit_params)
+        cli_print_output("text", response)
+    except (EvengHTTPError, EvengApiError) as err:
+        console.print_error(err)
+
+
+@click.command()
 @click.option(
     "--author",
     help="lab author",
@@ -688,3 +754,4 @@ lab.add_command(topology)
 lab.add_command(import_lab)
 lab.add_command(export_lab)
 lab.add_command(create_from_topology)
+lab.add_command(topology_edit)

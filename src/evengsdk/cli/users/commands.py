@@ -1,4 +1,5 @@
 import click
+from pygments.lexer import default
 
 from evengsdk.cli.common import list_sub_command
 from evengsdk.cli.console import cli_print_output, console
@@ -102,6 +103,7 @@ def read(ctx, username):
 
 
 @click.command()
+@click.option("--sat", default="-1")
 @user_sub_command
 @click.pass_context
 def edit(ctx, **options):

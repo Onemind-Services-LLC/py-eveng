@@ -72,7 +72,7 @@ class EvengApi:
         self,
         username: str,
         password: str,
-        role: str = "user",
+        role: str = "",
         name: str = "",
         email: str = "",
         expiration: str = "-1",
@@ -125,7 +125,7 @@ class EvengApi:
             ),
         )
 
-    def edit_user(self, username: str, data: dict = None) -> Dict:
+    def edit_user(self, username: str, data: Optional[dict] = None) -> Dict:
         """Edit user details
 
         :param username: the user name for user to update
@@ -135,16 +135,18 @@ class EvengApi:
         :raises ValueError: when data value is missing
         """
         if not data:
-            raise ValueError("data field is required.")
+            raise ValueError("The 'data' field is required.")
 
-        url = self.client.url_prefix + f"/users/{username}"
+        url = f"{self.client.url_prefix}/users/{username}"
         existing_user = self.get_user(username)
 
-        updated_user = {}
-        if existing_user:
-            updated_user = copy.deepcopy(existing_user)
-            updated_user.update(data)
-            return self.client.put(url, data=json.dumps(updated_user))
+        if not existing_user:
+            raise RuntimeError(f"User '{username}' not found.")
+
+        updated_user = copy.deepcopy(existing_user)
+        updated_user.update(data)
+
+        return self.client.put(url, json=updated_user)
 
     def delete_user(self, username: str) -> Dict:
         return self.client.delete(f"/users/{username}")
@@ -879,6 +881,79 @@ class EvengApi:
         """Unlock lab to allow edits"""
         url = "/labs" + f"{self.normalize_path(path)}/Unlock"
         return self.client.put(url, json={"password": password})
+
+    def edit_topology(self, path: str, id: str, params: dict) -> Dict:
+        """
+        Edit an existing topology node in a lab.
+
+        :param path: Relative path to the lab file (e.g., "lab.unl")
+        :param id: Unique node ID within the topology to be edited
+        :param params: Dictionary containing one or more of the following fields:
+            - template: Template name used to define the node (e.g., "linux")
+            - type: Node type (e.g., "qemu", "docker", etc.)
+            - image: Disk image assigned to the node (e.g., "linux-ubuntu-mate-20.04")
+            - name: Display name of the node
+            - icon: Icon filename for visual representation (e.g., "Server-2D-Linux-S.svg")
+            - uuid: Universally unique identifier for the node
+            - cpulimit: Whether to apply CPU limit (0 = disabled, 1 = enabled)
+            - cpu: Number of virtual CPUs assigned to the node
+            - ram: Amount of RAM in MB
+            - ethernet: Number of Ethernet interfaces
+            - firstmac: Starting MAC address for the node (e.g., "50:00:00:01:00:00")
+            - qemu_version: QEMU version to use
+            - qemu_arch: Architecture for QEMU (e.g., "x86_64")
+            - qemu_nic: QEMU NIC model (e.g., "virtio-net-pci")
+            - qemu_options: Custom QEMU options string
+            - ro_qemu_options: Read-only QEMU options string
+            - config: Startup configuration (e.g., 0 = none)
+            - sat: Satellite option (0 = disabled, 1 = enabled)
+            - delay: Boot delay in seconds
+            - console: Console type (e.g., "vnc", "telnet", "rdp")
+            - rdp_user: RDP username
+            - rdp_password: RDP password
+            - left: Horizontal (X) position of the node in the lab layout
+            - top: Vertical (Y) position of the node in the lab layout
+            - count: Number of duplicate nodes to create
+            - postfix: Number to append to the node name for uniqueness
+
+        :return: JSON response from the EVE-NG API after the update request
+        :raises ValueError: If any unsupported parameter is included
+        """
+        valid_params = (
+            "template",
+            "type",
+            "image",
+            "name",
+            "icon",
+            "uuid",
+            "cpulimit",
+            "cpu",
+            "ram",
+            "ethernet",
+            "firstmac",
+            "qemu_version",
+            "qemu_arch",
+            "qemu_nic",
+            "qemu_options",
+            "ro_qemu_options",
+            "config",
+            "sat",
+            "delay",
+            "console",
+            "rdp_user",
+            "rdp_password",
+            "left",
+            "top",
+            "count",
+            "postfix",
+        )
+
+        for key in params:
+            if key not in valid_params:
+                raise ValueError(f"'{key}' is an invalid or unsupported parameter")
+
+        url = f"/labs/{path}/nodes/{id}"
+        return self.client.put(url, data=json.dumps(params))
 
     def _get_network_types(self):
         network_types = self.list_networks()

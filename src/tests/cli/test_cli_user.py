@@ -39,7 +39,7 @@ class TestUserCommands:
         Arrange/Act: Run the `user` command with the 'list' subcommand.
         Assert: The output indicates that lab imported successfully.
         """
-        result = helpers.run_cli_command(["user", "list"])
+        result = helpers.run_cli_command(["user", "list", "--output", "table"])
         assert result.exit_code == 0, result.output
         assert test_user_data["username"] in result.output
 
@@ -59,12 +59,13 @@ class TestUserCommands:
         Assert: The output indicates that lab retrieved successfully.
         """
         edited_user = test_user_data.copy()
-        edited_user["name"] = "John Doe edited"
         commands = [
             "user",
             "edit",
-            "--username",
+            "-u",
             edited_user["username"],
+            "-n",
+            "John Doe edited",
         ]
         result = helpers.run_cli_command(commands)
         assert "User saved" in result.output
