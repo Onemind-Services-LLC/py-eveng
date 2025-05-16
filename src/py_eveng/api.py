@@ -4,7 +4,7 @@ from pathlib import Path
 from random import randint
 from typing import BinaryIO, Dict, Literal, Optional, Tuple
 from urllib.parse import quote_plus
-from evengsdk.cli.console import console
+from py_eveng.cli.console import console
 
 
 class EvengApi:
@@ -12,7 +12,7 @@ class EvengApi:
         """EVE-NG API wrapper object
 
         :param client: the EvengClient object for managing REST calls
-        :type client: evengsdk.client.EvengClient
+        :type client: py-eveng.client.EvengClient
         :param timeout: connection timeout in seconds, defaults to 30
         :type timeout: int, optional
         """
@@ -128,7 +128,7 @@ class EvengApi:
     def edit_user(self, username: str, data: Optional[dict] = None) -> Dict:
         """Edit user details
 
-        :param username: the user name for user to update
+        :param username: The user name for user to update
         :type username: str
         :param data: payload for user details to update, defaults to None
         :type data: dict, optional

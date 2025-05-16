@@ -3,7 +3,7 @@ import pytest
 
 @pytest.fixture(scope="module")
 def setup_lab(lab, authenticated_client):
-    """Cerate lab and return lab object."""
+    """Create lab and return lab object."""
     yield authenticated_client.api.create_lab(**lab)
     authenticated_client.api.delete_lab(lab["path"] + lab["name"])
 

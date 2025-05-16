@@ -8,8 +8,8 @@ import pytest
 from click.testing import CliRunner, Result
 from dotenv import load_dotenv
 
-from evengsdk.cli.cli import main as cli
-from evengsdk.client import EvengClient
+from py_eveng.cli.cli import main as cli
+from py_eveng.client import EvengClient
 
 load_dotenv()
 

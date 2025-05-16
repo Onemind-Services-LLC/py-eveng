@@ -7,8 +7,8 @@ from typing import Dict, List
 
 import click
 
-from evengsdk.cli.console import console
-from evengsdk.client import EvengLoginError
+from py_eveng.cli.console import console
+from py_eveng.client import EvengLoginError
 
 
 def get_client(ctx):
@@ -21,7 +21,7 @@ def get_client(ctx):
 
 
 def to_human_readable(obj: Dict, keys: List[str] = []) -> str:
-    """Generate human readable output for passed object
+    """Generate Human readable output for passed object
 
     Args:
         obj (dict): Object to format

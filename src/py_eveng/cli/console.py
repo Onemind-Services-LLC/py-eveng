@@ -5,8 +5,8 @@ from rich.console import Console
 from rich.theme import Theme
 from rich.traceback import install
 
-from evengsdk.plugins.display import format_output
-from evengsdk.exceptions import EvengHTTPError, EvengApiError
+from py_eveng.plugins.display import format_output
+from py_eveng.exceptions import EvengHTTPError, EvengApiError
 
 # Install rich traceback as default traceback handler
 install(show_locals=True, max_frames=10)

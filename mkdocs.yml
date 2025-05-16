@@ -1,5 +1,5 @@
 ---
-site_name: evengsdk
+site_name: py_eveng
 nav:
     - Home: index.md
     - API reference:
@@ -8,8 +8,8 @@ nav:
     - Topology Builder: topology_builder.md
 
 # Repository
-repo_name: "Onemind-Services-LLC/evengsdk"
-repo_url: "https://github.com/Onemind-Services-LLC/evengsdk"
+repo_name: "Onemind-Services-LLC/py-eveng"
+repo_url: "https://github.com/Onemind-Services-LLC/py-eveng"
 
 theme:
   name: "material"

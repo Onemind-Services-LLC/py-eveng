@@ -3,8 +3,8 @@ import logging
 
 import pytest
 
-from evengsdk.client import EvengClient
-from evengsdk.exceptions import EvengLoginError, EvengHTTPError
+from py_eveng.client import EvengClient
+from py_eveng.exceptions import EvengLoginError, EvengHTTPError
 
 
 @pytest.fixture()

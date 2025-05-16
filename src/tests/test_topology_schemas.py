@@ -16,9 +16,9 @@ def topology(filename):
 def topology_schema_file():
     """
     Returns the path to the topology schema file
-    from evengsdk.schemas directory
+    from py_eveng.schemas directory
     """
-    return Path("src/evengsdk/schemas/lab-schema.json")
+    return Path("src/py_eveng/schemas/lab-schema.json")
 
 
 @pytest.fixture()

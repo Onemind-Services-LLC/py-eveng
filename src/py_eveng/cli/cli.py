@@ -3,20 +3,20 @@ import os
 
 import click
 
-from evengsdk.client import EvengClient
-from evengsdk.cli.console import cli_print
-from evengsdk.cli.folders.commands import folder
-from evengsdk.cli.lab.commands import lab
-from evengsdk.cli.node.commands import node
-from evengsdk.cli.users.commands import user
-from evengsdk.cli.system.commands import (
+from py_eveng.client import EvengClient
+from py_eveng.cli.console import cli_print
+from py_eveng.cli.folders.commands import folder
+from py_eveng.cli.lab.commands import lab
+from py_eveng.cli.node.commands import node
+from py_eveng.cli.users.commands import user
+from py_eveng.cli.system.commands import (
     status,
     templates,
     read_template,
     user_roles,
     network_types,
 )
-from evengsdk.cli.version import __version__
+from py_eveng.cli.version import __version__
 
 
 ERROR = click.style("ERROR: ", fg="red")
