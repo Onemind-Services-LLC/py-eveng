@@ -1,22 +1,22 @@
 # Introduction
 
-`Evengsdk` is a Python library with command-line utilities to manage EVE-NG servers and network topologies.
+`py-eveng` is a Python library with command-line utilities to manage EVE-NG servers and network topologies.
 
-`Evengsdk` provides the flexibility to your EVE-NG hosts and topologies in different ways:
+`py-eveng` provides the flexibility to your EVE-NG hosts and topologies in different ways:
 
-* **evengsdk**: The `evengsdk` library provides a set of classes to manage EVE-NG servers and network topologies.
+* **py-eveng**: The `py-eveng` library provides a set of classes to manage EVE-NG servers and network topologies.
 * **eve-ng CLI**: The eve-ng command-line utility provides a set of commands to manage EVE-NG servers and network topologies without the need to write Python code.
 * **Topology Builder**: The topology builder lets you build a topology from a YAML declaration file.
 
 ## Requirements
 
-Evengsdk works with both the community and PRO versions of EVE-NG. You will need a working instance of EVE-NG to use Evengsdk.
+py-eveng works with both the community and PRO versions of EVE-NG. You will need a working instance of EVE-NG to use py-eveng.
 
-Evengsdk requires Python 3.8 or later.
+py-eveng requires Python 3.8 or later.
 
 ## Installation
 
-You can install Evengsdk from PyPI with pip:
+You can install py-eveng from PyPI with pip:
 
 ```sh
 pip install eve-ng
@@ -29,7 +29,7 @@ pip install eve-ng
 You can interact with the EVE-NG API through the `client.api` interface
 
 ```python
-from evengsdk.client import EvengClient
+from py_eveng.client import EvengClient
 from pprint import pprint
 
 client = EvengClient("10.246.32.254", log_file="test.log")
@@ -41,8 +41,7 @@ resp = client.api.list_node_templates()
 ### Build a Topology
 
 ```python
-from evengsdk.client import EvengClient
-
+from py_eveng.client import EvengClient
 
 client = EvengClient("10.246.32.254", log_file="test.log", ssl_verify=False, protocol="https")
 client.disable_insecure_warnings()  # disable warnings for self-signed certificates
@@ -53,7 +52,7 @@ client.set_log_level("DEBUG")
 lab = {"name": "test_lab", "description": "Test Lab", "path": "/"}
 resp = client.api.create_lab(**lab)
 if resp['status'] == "success":
-  print("lab created successfully.")
+    print("lab created successfully.")
 
 # we need the lab path to create objects in the lab
 lab_path = f"{lab['path']}{lab['name']}.unl"

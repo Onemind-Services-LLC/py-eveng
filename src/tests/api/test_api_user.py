@@ -1,6 +1,6 @@
 import pytest
 
-from evengsdk.exceptions import EvengHTTPError
+from py_eveng.exceptions import EvengHTTPError
 
 USERS = {
     "users": [("user", "passwd")],

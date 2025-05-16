@@ -1,7 +1,7 @@
 import pytest
 from click.testing import CliRunner, Result
 
-from evengsdk.cli.cli import main as cli
+from py_eveng.cli.cli import main as cli
 
 
 @pytest.mark.usefixtures("authenticated_client")

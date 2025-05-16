@@ -2,8 +2,8 @@ from pathlib import Path
 
 import yaml
 
-from evengsdk.schemas.validator import SchemaValidator
-from evengsdk.templates import ConfigTemplateBuilder
+from py_eveng.schemas.validator import SchemaValidator
+from py_eveng.templates import ConfigTemplateBuilder
 
 
 class Topology:

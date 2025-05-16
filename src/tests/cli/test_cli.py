@@ -1,7 +1,7 @@
 from click.testing import CliRunner, Result
 
-from evengsdk.cli.cli import main as cli
-from evengsdk.cli.version import __version__
+from py_eveng.cli.cli import main as cli
+from py_eveng.cli.version import __version__
 
 
 class TestCli:

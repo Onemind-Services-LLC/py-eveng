@@ -1,14 +1,14 @@
-# evengsdk
+# py-eveng
 
-![license](https://img.shields.io/github/license/Onemind-Services-LLC/evengsdk)
+![license](https://img.shields.io/github/license/Onemind-Services-LLC/py-eveng)
 [![Downloads](https://pepy.tech/badge/eve-ng)](https://pepy.tech/project/eve-ng)
 [![PyPI version](https://badge.fury.io/py/eve-ng.svg)](https://badge.fury.io/py/eve-ng)
 
-Documentation: https://Onemind-Services-LLC.github.io/evengsdk
+Documentation: https://onemind-services-llc.github.io/py-eveng/
 
 Open source library and command line utilities to work with the [EVE-NG](https://www.eve-ng.net/)  [REST API](https://www.eve-ng.net/index.php/documentation/howtos/how-to-eve-ng-api/) .
 
-Evegnsdk allows you to quickly build network topologies in EVE-NG for testing and development. The CLI tool also enables you quickly integrate EVE-NG into your CI/CD toolset for automated testing and validation.
+py-eveng allows you to quickly build network topologies in EVE-NG for testing and development. The CLI tool also enables you quickly integrate EVE-NG into your CI/CD toolset for automated testing and validation.
 
 ## Requirements
 
@@ -17,7 +17,7 @@ Evegnsdk allows you to quickly build network topologies in EVE-NG for testing an
 
 ## :rocket:Installation
 
-You can install `evengsdk` using pip
+You can install `py-eveng` using pip
 
 ```sh
 pip install eve-ng
@@ -28,7 +28,7 @@ pip install eve-ng
 You can interact with the EVE-NG API through the `client.api` interface
 
 ```python
->>> from evengsdk.client import EvengClient
+>>> from py_eveng.client import EvengClient
 >>> from pprint import pprint
 >>>
 >>> client = EvengClient("10.246.32.254", log_file="test.log")
@@ -45,28 +45,30 @@ You can interact with the EVE-NG API through the `client.api` interface
  'bigip': 'F5 BIG-IP LTM VE',
  'cumulus': 'Cumulus VX',
 
- <OUTPUT OMMITTED FOR BREVITY>
+< OUTPUT
+OMMITTED
+FOR
+BREVITY >
 
- 'linux': 'Linux',
- 'mikrotik': 'MikroTik RouterOS.missing',
- 'nsx': 'VMWare NSX.missing',
- 'nxosv9k': 'Cisco NX-OSv 9K',
- 'paloalto': 'Palo Alto.missing',
- 'pfsense': 'pfSense Firewall.missing',
- 'vcenter': 'VMWare vCenter.missing',
- 'vios': 'Cisco vIOS Router',
- 'viosl2': 'Cisco vIOS Switch',
- 'vmx': 'Juniper vMX.missing',
- 'vwlc': 'Cisco vWLC.missing',
- 'vyos': 'VyOS',
- 'xrv9k': 'Cisco XRv 9000.missing'}
->>>
+'linux': 'Linux',
+'mikrotik': 'MikroTik RouterOS.missing',
+'nsx': 'VMWare NSX.missing',
+'nxosv9k': 'Cisco NX-OSv 9K',
+'paloalto': 'Palo Alto.missing',
+'pfsense': 'pfSense Firewall.missing',
+'vcenter': 'VMWare vCenter.missing',
+'vios': 'Cisco vIOS Router',
+'viosl2': 'Cisco vIOS Switch',
+'vmx': 'Juniper vMX.missing',
+'vwlc': 'Cisco vWLC.missing',
+'vyos': 'VyOS',
+'xrv9k': 'Cisco XRv 9000.missing'}
+>> >
 ```
 #### Example: Build a Lab
 
 ```python
-from evengsdk.client import EvengClient
-
+from py_eveng.client import EvengClient
 
 client = EvengClient("10.246.32.254", log_file="test.log", ssl_verify=False, protocol="https")
 client.disable_insecure_warnings()  # disable warnings for self-signed certificates
@@ -77,7 +79,7 @@ client.set_log_level("DEBUG")
 lab = {"name": "test_lab", "description": "Test Lab", "path": "/"}
 resp = client.api.create_lab(**lab)
 if resp['status'] == "success":
-  print("lab created successfully.")
+    print("lab created successfully.")
 
 # we need the lab path to create objects in the lab
 lab_path = f"{lab['path']}{lab['name']}.unl"
@@ -160,7 +162,7 @@ Commands:
 
 ## :gear: Configuration
 
-It is simple enough to pass the proper flags to `eve-ng` specify details for your EVE-NG host. However, you may also pass the connection details as environment variables. You can set the following `evengsdk` environment variables:
+It is simple enough to pass the proper flags to `eve-ng` specify details for your EVE-NG host. However, you may also pass the connection details as environment variables. You can set the following `py-eveng` environment variables:
 
 * `EVE_NG_HOST ` - EVE-NG host name or IP address
 * `EVE_NG_USERNAME` - EVE-NG username

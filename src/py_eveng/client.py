@@ -3,9 +3,9 @@ import logging
 
 import requests
 from urllib3.exceptions import InsecureRequestWarning
-from evengsdk.api import EvengApi
+from py_eveng.api import EvengApi
 
-from evengsdk.exceptions import EvengHTTPError, EvengLoginError
+from py_eveng.exceptions import EvengHTTPError, EvengLoginError
 
 
 class EvengClient:
