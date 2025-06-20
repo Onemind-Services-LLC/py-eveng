@@ -1,6 +1,6 @@
 import pytest
 
-from evengsdk.exceptions import EvengHTTPError
+from py_eveng.exceptions import EvengHTTPError
 
 
 @pytest.mark.usefixtures("setup_lab")
@@ -23,7 +23,7 @@ class TestEvengApiLab:
 
     def test_get_non_existing_lab(self, authenticated_client):
         """
-        Verify that retrieving a non existing lab
+        Verify that retrieving a non-existing lab
         raises an error.
         """
         with pytest.raises(EvengHTTPError):

@@ -2,11 +2,11 @@ from pathlib import Path
 
 import click
 
-from evengsdk.cli.common import list_sub_command
-from evengsdk.cli.console import cli_print, cli_print_error, cli_print_output, console
-from evengsdk.cli.node import NODE_STATUS_CODES
-from evengsdk.cli.utils import get_active_lab, get_client
-from evengsdk.exceptions import EvengApiError, EvengHTTPError
+from py_eveng.cli.common import list_sub_command
+from py_eveng.cli.console import cli_print, cli_print_error, cli_print_output, console
+from py_eveng.cli.node import NODE_STATUS_CODES
+from py_eveng.cli.utils import get_active_lab, get_client
+from py_eveng.exceptions import EvengApiError, EvengHTTPError
 
 client = None
 

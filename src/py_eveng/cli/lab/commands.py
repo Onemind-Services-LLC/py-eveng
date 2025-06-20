@@ -9,12 +9,12 @@ from typing import Dict, List, Optional
 import click
 import yaml
 
-from evengsdk.cli.common import list_command, list_sub_command
-from evengsdk.cli.console import cli_print, cli_print_error, cli_print_output, console
-from evengsdk.cli.lab.topology import Topology
-from evengsdk.cli.utils import get_active_lab, get_client, thread_executor
-from evengsdk.client import EvengClient
-from evengsdk.exceptions import EvengApiError, EvengHTTPError
+from py_eveng.cli.common import list_command, list_sub_command
+from py_eveng.cli.console import cli_print, cli_print_error, cli_print_output, console
+from py_eveng.cli.lab.topology import Topology
+from py_eveng.cli.utils import get_active_lab, get_client, thread_executor
+from py_eveng.client import EvengClient
+from py_eveng.exceptions import EvengApiError, EvengHTTPError
 
 
 # https://stackoverflow.com/questions/37310718/mutually-exclusive-option-groups-in-python-click

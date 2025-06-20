@@ -1,9 +1,9 @@
-# Evengsdk
+# py_eveng
 
-::: evengsdk.client
+::: py_eveng.client
     selection:
       docstring_style: restructured-text
 
-::: evengsdk.api
+::: py_eveng.api
     selection:
       docstring_style: restructured-text

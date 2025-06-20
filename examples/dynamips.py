@@ -1,4 +1,4 @@
-from evengsdk.client import EvengClient
+from py_eveng.client import EvengClient
 
 client = EvengClient(
     "eve-ng10.Onemind-Services-LLC.me",

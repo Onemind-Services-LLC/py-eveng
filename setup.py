@@ -16,13 +16,13 @@ REQUIRES = [
 
 def get_version():
     global_vars = {}
-    exec(Path("src/evengsdk/cli/version.py").read_text(), global_vars)
+    exec(Path("src/py_eveng/cli/version.py").read_text(), global_vars)
     return global_vars["__version__"]
 
 
 setup(
     name="eve-ng",
-    keywords=["eve-ng", "eveng", "unetlab", "evengsdk"],
+    keywords=["eve-ng", "eveng", "unetlab", "py-eveng"],
     license="MIT license",
     version=get_version(),
     author="Abhimanyu Saharan",
@@ -46,14 +46,14 @@ setup(
     ),
     long_description=README,
     long_description_content_type="text/markdown",
-    url="https://github.com/Onemind-Services-LLC/evengsdk.git",
+    url="https://github.com/Onemind-Services-LLC/py-eveng.git",
     packages=find_packages("src"),
     package_dir={"": "src"},
     install_requires=REQUIRES,
     entry_points={
         "console_scripts": [
-            "eve-ng=evengsdk.cli.cli:main",
-            "eveng=evengsdk.cli.cli:main",
+            "eve-ng=py_eveng.cli.cli:main",
+            "eveng=py_eveng.cli.cli:main",
         ],
     },
     include_package_data=True,

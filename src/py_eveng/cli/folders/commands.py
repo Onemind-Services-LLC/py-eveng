@@ -1,10 +1,10 @@
 import click
 
-from evengsdk.exceptions import EvengApiError, EvengHTTPError
-from evengsdk.cli.console import console
-from evengsdk.cli.common import list_sub_command
-from evengsdk.cli.console import cli_print_output
-from evengsdk.cli.utils import get_client
+from py_eveng.exceptions import EvengApiError, EvengHTTPError
+from py_eveng.cli.console import console
+from py_eveng.cli.common import list_sub_command
+from py_eveng.cli.console import cli_print_output
+from py_eveng.cli.utils import get_client
 
 
 @list_sub_command

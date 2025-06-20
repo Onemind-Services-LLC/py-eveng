@@ -4,7 +4,7 @@ This page provides documentation for our command line tools.
 
 ## :gear: Configuration
 
-It is simple enough to pass the proper flags to `eve-ng` specify details for your EVE-NG host. However, you may also pass the connection details as environment variables. You can set the following `evengsdk` environment variables:
+It is simple enough to pass the proper flags to `eve-ng` specify details for your EVE-NG host. However, you may also pass the connection details as environment variables. You can set the following `py-eveng` environment variables:
 
 * `EVE_NG_HOST ` - EVE-NG host name or IP address
 * `EVE_NG_USERNAME` - EVE-NG username
@@ -31,7 +31,7 @@ export EVE_NG_LAB_PATH='/mylab.unl'
 ## :keyboard: Commands
 
 ::: mkdocs-click
-    :module: evengsdk.cli.cli
+    :module: py_eveng.cli.cli
     :command: main
     :prog_name: eve-ng
     :depth: 1
